@@ -10,6 +10,6 @@
     <title>JOURNAL SKENSA</title>
 </head>
 <body class="bg-back box-border">
-    {{ $slot }}
+      {{ $slot }}
 </body>
 </html>

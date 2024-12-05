@@ -1,3 +1,3 @@
-<x-template>
-      <x-pages.verif></x-pages.verif>
-</x-template>
+<x-mainTemplate>
+    
+</x-mainTemplate>
