@@ -13,9 +13,13 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                back: 'rgba(227, 255, 255, .85)',
+                back: '#C5DDDD',
+                content: '#E3FFFF',
                 blueSide: '#001185',
                 hoverBlue: '#2839AD'
+            },
+            fontSize: {
+                cpy: ['8px', '10px'],
             }
         },
     },
