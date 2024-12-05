@@ -1,5 +1,26 @@
-@component('components.section.layout')
-      <div>
-            
+<div class="h-screen w-full flex justify-center items-center">
+      <div class="bg-white shadow-lg border-1 border-slate-400 rounded-lg">
+            <form action="" class="w-full flex flex-col justify-center items-center px-9 py-14 gap-7">
+                  <h1 class="text-4xl font-bold uppercase p-4 mb-8 text-blueSide">Login</h1>
+                  <div class="flex items-center rounded-md border-2 border-slate-400 px-3 py-2 justify-between group focus-within:border-blueSide transition-all ease-in-out duration-200">
+                        <input type="text" id="username" class="focus:outline-none focus:ring-0 focus:border-transparent w-[30rem] " placeholder="Username...">
+                        <i class="fi fi-ss-portrait text-3xl text-slate-500 group-focus-within:text-blueSide transition-all ease-in-out duration-200 -mb-1"></i>
+                  </div>
+
+                  <div class="flex items-center justify-between rounded-md border-2 border-slate-400 px-3 py-2 group focus-within:border-blueSide transition-all ease-in-out duration-200">
+                        <input type="password" id="password" class="focus:outline-none focus:ring-0 focus:border-transparent w-[30rem]" placeholder="Password...">
+                        <i class="fi fi-ss-key text-3xl text-slate-500 group-focus-within:text-blueSide transition-all ease-in-out duration-200 -mb-1"></i>
+                  </div>
+
+                  <select name="" id="condition" class=" group w-full px-3 py-2 border-2 border-slate-400 rounded-md appearance-none focus:border-blueSide transition-all ease-in-out duration-200">
+                        <option value="WFO" class=" hover:bg-blueSide hover:text-white focus:bg-blueSide focus:text-white">Work From Office</option>
+                        <option value="WFH" class="hover:bg-blueSide hover:text-white focus:bg-blueSide focus:text-white">Work from Home</option>
+                        <option value="LAP" class="hover:bg-blueSide hover:text-white focus:bg-blueSide focus:text-white">Kerja di Lapangan</option>
+                  </select>
+
+                  <div class="w-full flex justify-end mt-4">
+                        <button type="submit" class="bg-blueSide px-7 py-3 text-white text-lg font-semibold rounded-lg">Login</button>
+                  </div>
+            </form>
       </div>
-@endcomponent
+</div>
