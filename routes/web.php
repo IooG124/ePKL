@@ -1,11 +1,8 @@
 <?php
 
+use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('absen');
-});
-Route::get('/login', function (){
-    return view('login');
-});
+Route::get('/login', [Controllers\RoutesController::class, 'vLogin']);
+Route::get('/', [Controllers\RoutesController::class, 'vAbsen']);
 
