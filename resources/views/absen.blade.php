@@ -48,9 +48,9 @@ foreach ($dataChart as $data) {
   </div>
 
   <!-- Table Section -->
-  <div class="rounded-md">
+  <div class="bg-white p-6 rounded-md shadow-md">
     <table class="min-w-full table-auto text-sm text-left text-gray-700">
-      <thead>
+      <thead class="bg-blue-100">
         <tr>
           <th class="px-6 py-3 border-b">No</th>
           <th class="px-6 py-3 border-b">Tanggal</th>
@@ -60,7 +60,7 @@ foreach ($dataChart as $data) {
           <th class="px-6 py-3 border-b">Total Jam Kerja</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="bg-white">
         <?php if (empty($dataChart)): ?>
           <tr>
             <td colspan="6" class="px-6 py-4 text-center text-gray-500">Tidak ada data untuk ditampilkan</td>

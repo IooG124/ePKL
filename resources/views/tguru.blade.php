@@ -1,27 +1,40 @@
-<?php
-    // Example of fetching teacher data from a database
-    $teachers = [
-        // Example data
-        // ['username' => 'guru1', 'password' => 'pass1', 'nama' => 'Guru 1', 'nip' => '123456'],
-        // ['username' => 'guru2', 'password' => 'pass2', 'nama' => 'Guru 2', 'nip' => '654321'],
-    ];
-
-    // Prevent Caching Issues
-    header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
-?>
-
 <x-mainTemplate>
     <!-- Main container -->
     <div class="container mx-auto px-6 py-8">
         <!-- Add Teacher Button -->
         <div class="flex justify-end mb-6">
-            <button class="bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+            <button id="addTeacherButton" class="bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
                 + Tambah Guru
             </button>
+        </div>
+
+        <!-- Pop-up Modal -->
+        <div id="addTeacherModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                <h2 class="text-2xl font-bold mb-4">Tambah Guru</h2>
+                <form id="addTeacherForm">
+                    <div class="mb-4">
+                        <label for="username" class="block text-gray-700 font-bold">Username</label>
+                        <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="block text-gray-700 font-bold">Password</label>
+                        <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="nama" class="block text-gray-700 font-bold">Nama Lengkap</label>
+                        <input type="text" id="nama" name="nama" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="nip" class="block text-gray-700 font-bold">NIP</label>
+                        <input type="text" id="nip" name="nip" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" id="cancelTeacherButton" class="bg-gray-500 text-white py-2 px-4 rounded-lg mr-2">Batal</button>
+                        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg">Tambah</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <!-- Table Card -->
@@ -49,7 +62,7 @@
                     <?php 
                         if (!empty($teachers)) {
                             foreach ($teachers as $index => $teacher) {
-                                $rowClass = $index % 2 == 0; // Alternating row colors
+                                $rowClass = $index % 2 == 0 ? 'bg-white' : 'bg-gray-100'; // Alternating row colors
                                 $rowNumber = $index + 1; // Row number starts from 1
 
                                 echo "<tr class='{$rowClass} transition-colors duration-200'>";
@@ -70,7 +83,37 @@
     </div>
 
     <script>
-        // JavaScript to ensure date updates dynamically
+        // JavaScript for modal functionality
+        const addTeacherButton = document.getElementById('addTeacherButton');
+        const addTeacherModal = document.getElementById('addTeacherModal');
+        const cancelTeacherButton = document.getElementById('cancelTeacherButton');
+
+        // Show modal
+        addTeacherButton.addEventListener('click', () => {
+            addTeacherModal.classList.remove('hidden');
+        });
+
+        // Hide modal
+        cancelTeacherButton.addEventListener('click', () => {
+            addTeacherModal.classList.add('hidden');
+        });
+
+        // Handle form submission
+        const addTeacherForm = document.getElementById('addTeacherForm');
+        addTeacherForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Gather form data
+            const formData = new FormData(addTeacherForm);
+            const data = Object.fromEntries(formData.entries());
+
+            console.log(data); // Replace this with logic to save the data (e.g., AJAX or API call)
+
+            // Close the modal
+            addTeacherModal.classList.add('hidden');
+        });
+
+        // Update the date dynamically
         document.getElementById("current-date").innerText = new Date().toLocaleDateString("id-ID", {
             day: "2-digit",
             month: "2-digit",
