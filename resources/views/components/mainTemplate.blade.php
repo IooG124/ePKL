@@ -33,31 +33,27 @@
                 <div class="flex flex-col gap-0.2 pt-4">
                     <h1 class="text-xl md:text-2xl font-normal tracking-wider py-2 uppercase">Siswa</h1>
                     <x-link-side href="/">
-                        <i class="fi fi-ss-face-viewfinder text-2xl"></i>
+                        <i class="fi fi-ss-face-viewfinder text-xl"></i>
                         <h1 class="text-lg md:text-xl">Absen</h1>
                     </x-link-side>
                     <x-link-side href="/Dudi">
-                        <i class="fi fi-ss-house-building text-2xl"></i>
+                        <i class="fi fi-ss-house-building text-xl"></i>
                         <h1 class="text-lg md:text-xl">Daftar DuDi</h1>
                     </x-link-side>
                     <x-link-side href="/Jurnal">
-                        <i class="fi fi-ss-to-do text-2xl"></i>
+                        <i class="fi fi-ss-to-do text-xl"></i>
                         <h1 class="text-lg md:text-xl">Jurnal Harian</h1>
-                    </x-link-side>
-                    <x-link-side href="">
-                        <i class="fi fi-ss-time-past text-2xl"></i>
-                        <h1 class="text-lg md:text-xl">Histori</h1>
                     </x-link-side>
                 </div>
         
                 <div class="flex flex-col gap-0.2 pt-1">
                     <h1 class="text-xl md:text-2xl font-normal tracking-wider uppercase py-2">Guru</h1>
                     <x-link-side href="/Siswa">
-                        <i class="fi fi-ss-users-medical text-2xl"></i>
+                        <i class="fi fi-ss-users-medical text-xl"></i>
                         <h1 class="text-lg md:text-xl">Tambah Siswa</h1>
                     </x-link-side>
                     <x-link-side href="/Verifikasi">
-                        <i class="fi fi-ss-memo-circle-check text-2xl"></i>
+                        <i class="fi fi-ss-memo-circle-check text-xl"></i>
                         <h1 class="text-lg md:text-xl">Verifikasi Jurnal</h1>
                     </x-link-side>
                 </div>
@@ -65,15 +61,15 @@
                 <div class="flex flex-col gap-0.2 pt-1">
                     <h1 class="text-xl md:text-2xl font-normal tracking-wider uppercase py-2">Admin</h1>
                     <x-link-side href="/Guru">
-                        <i class="fi fi-ss-employees-woman-man text-2xl"></i>
+                        <i class="fi fi-ss-employees-woman-man text-xl"></i>
                         <h1 class="text-lg md:text-xl">Tambah Guru</h1>
                     </x-link-side>
                     <x-link-side href="/Profile">
-                        <i class="fi fi-ss-user text-2xl"></i>
+                        <i class="fi fi-ss-user text-xl"></i>
                         <h1 class="text-lg md:text-xl">Profile</h1>
                     </x-link-side>
                     <x-link-side href="">
-                        <i class="fi fi-ss-exit text-2xl"></i>
+                        <i class="fi fi-ss-exit text-xl"></i>
                         <h1 class="text-lg md:text-xl">Log Out</h1>
                     </x-link-side>
                     <div>

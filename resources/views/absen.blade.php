@@ -1,9 +1,13 @@
 <?php
+// Set default timezone (adjust as per your location)
+date_default_timezone_set('Asia/Jakarta'); // Change to your timezone if needed
+
 // Contoh data pengguna dan tanggal
 $user = [
     'nama' => 'Superadmin',
 ];
 
+// Get the current date in the correct format
 $tanggalHariIni = date('d / m / Y');
 
 // Contoh data dari database (sesuaikan dengan query database Anda)
@@ -33,7 +37,7 @@ foreach ($dataChart as $data) {
   <!-- Chart Section -->
   <div class="bg-white p-8 rounded-md shadow-md mb-8">
     <?php if (empty($dataChart)): ?>
-      <div class="flex items-center justify-center h-40">
+      <div class="flex items-center justify-center h-32">
         <p class="text-center text-gray-500">Tidak ada data untuk ditampilkan</p>
       </div>
     <?php else: ?>
@@ -44,9 +48,9 @@ foreach ($dataChart as $data) {
   </div>
 
   <!-- Table Section -->
-  <div class="bg-white p-6 rounded-md shadow-md">
+  <div class="rounded-md">
     <table class="min-w-full table-auto text-sm text-left text-gray-700">
-      <thead class="bg-blue-100">
+      <thead>
         <tr>
           <th class="px-6 py-3 border-b">No</th>
           <th class="px-6 py-3 border-b">Tanggal</th>
@@ -56,7 +60,7 @@ foreach ($dataChart as $data) {
           <th class="px-6 py-3 border-b">Total Jam Kerja</th>
         </tr>
       </thead>
-      <tbody class="bg-white">
+      <tbody>
         <?php if (empty($dataChart)): ?>
           <tr>
             <td colspan="6" class="px-6 py-4 text-center text-gray-500">Tidak ada data untuk ditampilkan</td>

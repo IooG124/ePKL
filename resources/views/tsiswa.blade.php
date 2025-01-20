@@ -2,9 +2,16 @@
     // Example of fetching student data from a database
     $students = [
         // Example data
-        // ['username' => 'Username1', 'password' => 'Password1', 'nama' => 'Nama 1', 'no_absen' => '01', 'kelas' => 'X-A'],
-        // ['username' => 'Username2', 'password' => 'Password2', 'nama' => 'Nama 2', 'no_absen' => '02', 'kelas' => 'X-B'],
+        // ['username' => 'User1', 'password' => 'Pass1', 'nama' => 'Nama 1', 'no_absen' => '01', 'kelas' => 'X-A'],
+        // ['username' => 'User2', 'password' => 'Pass2', 'nama' => 'Nama 2', 'no_absen' => '02', 'kelas' => 'X-B'],
     ];
+
+    // Prevent Caching Issues
+    header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
 ?>
 
 <x-mainTemplate>
@@ -18,18 +25,18 @@
         </div>
 
         <!-- Table Card -->
-        <div class="bg-content rounded-lg p-6">
+        <div class="rounded-lg p-6">
             <!-- Header Section with Date -->
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold text-gray-800">Daftar Siswa</h1>
                 <p class="text-lg text-gray-600">
-                    Hari ini: <?php echo date('d / m / Y'); ?>
+                    Hari ini: <span id="current-date"><?php echo date('d / m / Y'); ?></span>
                 </p>
             </div>
 
             <!-- Table -->
-            <table class="min-w-full table-auto text-sm text-left text-gray-700">
-                <thead class="bg-gradient-to-r bg-content text-black">
+            <table class="min-w-full table-auto text-sm text-left text-gray-700 border-collapse">
+                <thead class=" text-black">
                     <tr>
                         <th class="px-6 py-3 border-b">No</th>
                         <th class="px-6 py-3 border-b">Username</th>
@@ -39,24 +46,37 @@
                         <th class="px-6 py-3 border-b">Kelas</th>
                     </tr>
                 </thead>
-                <tbody class="bg-gray-50">
+                <tbody>
                     <?php 
-                        // Start with index 1
-                        foreach ($students as $index => $student) {
-                            $rowClass = $index % 2 == 0 ? 'bg-white' : 'bg-gray-100'; // Alternating row colors
-                            $rowNumber = $index + 1; // To display proper row number starting from 1
-                            echo "<tr class='{$rowClass} hover:bg-blue-50 transition-colors duration-200'>";
-                            echo "<td class='px-6 py-4 border-b'>{$rowNumber}</td>";
-                            echo "<td class='px-6 py-4 border-b'>{$student['username']}</td>";
-                            echo "<td class='px-6 py-4 border-b'>{$student['password']}</td>";
-                            echo "<td class='px-6 py-4 border-b'>{$student['nama']}</td>";
-                            echo "<td class='px-6 py-4 border-b'>{$student['no_absen']}</td>";
-                            echo "<td class='px-6 py-4 border-b'>{$student['kelas']}</td>";
-                            echo "</tr>";
+                        if (!empty($students)) {
+                            foreach ($students as $index => $student) {
+                                $rowClass = $index % 2 == 0 ? 'bg-white' : 'bg-gray-100'; // Alternating row colors
+                                $rowNumber = $index + 1; // Row number starts from 1
+                                
+                                echo "<tr class='{$rowClass} hover:bg-blue-50 transition-colors duration-200'>";
+                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($rowNumber) . "</td>";
+                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($student['username']) . "</td>";
+                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($student['password']) . "</td>";
+                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($student['nama']) . "</td>";
+                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($student['no_absen']) . "</td>";
+                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($student['kelas']) . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='6' class='text-center text-gray-500 py-4'>Tidak ada data siswa.</td></tr>";
                         }
                     ?>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <script>
+        // JavaScript to ensure date updates dynamically
+        document.getElementById("current-date").innerText = new Date().toLocaleDateString("id-ID", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        });
+    </script>
 </x-mainTemplate>
