@@ -27,6 +27,10 @@ class RoutesController extends Controller {
         return view('jurnal');
     }
 
+    public function vListJurnal() {
+      return view('journalList');
+  }
+
     public function vProfile() {
         return view('Profile');
     }

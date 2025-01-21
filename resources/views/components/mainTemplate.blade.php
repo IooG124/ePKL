@@ -43,6 +43,10 @@
                     </x-link-side>
                     <x-link-side href="/Jurnal">
                         <i class="fi fi-ss-to-do text-xl"></i>
+                        <h1 class="text-lg md:text-xl">Tambah Jurnal</h1>
+                    </x-link-side>
+                    <x-link-side href="/ListJurnal">
+                        <i class="fi fi-ss-to-do text-xl"></i>
                         <h1 class="text-lg md:text-xl">Jurnal Harian</h1>
                     </x-link-side>
                 </div>
@@ -81,7 +85,7 @@
         <!-- Main Content -->
         <div class="flex flex-col w-full h-full overflow-auto">
             <!-- Top Bar -->
-            <div class="flex flex-row w-full sticky top-0 justify-between items-center px-6 py-4 bg-content shadow-md">
+            <div id="top-bar" class="flex flex-row w-full sticky top-0 justify-between items-center px-6 py-4 bg-content shadow-md transition-all duration-300">
                 <div>
                     <input type="checkbox" id="menu-toggle" class="hidden">
                     <label for="menu-toggle" class="space-y-1 p-2 block md:hidden">
@@ -90,15 +94,12 @@
                         <div class="w-6 h-[5px] bg-gray-700 rounded-full"></div>
                     </label>
                 </div>
-                <div class="flex gap-4 items-center bg-gray-300 px-4 py-2 rounded-lg w-full md:w-auto">
-                    <!-- Search Icon -->
-                    <label for="search" class="pt-2 cursor-pointer">
+                <!-- Search Bar -->
+                <div id="search-bar" class="flex items-center bg-gray-200 px-4 py-2 rounded-lg shadow-md w-full md:w-auto transition-all duration-300 hover:bg-gray-300 focus-within:bg-gray-300">
+                    <label for="search" class="text-gray-600 cursor-pointer">
                         <i class="fi fi-rr-search text-2xl"></i>
                     </label>
-                    <!-- Search Input -->
-                    <input type="text" id="search"
-                        class="w-full md:w-[22rem] text-base md:text-xl bg-inherit focus:outline-none placeholder:text-slate-500"
-                        placeholder="Search">
+                    <input type="text" id="search" class="w-full md:w-[22rem] text-base md:text-lg bg-transparent border-none focus:outline-none placeholder:text-gray-400 ml-2" placeholder="Search..." aria-label="Search">
                 </div>
             </div>
             
@@ -111,20 +112,23 @@
         </div>
     </div>
 
-    <!-- Script to toggle sidebar on mobile -->
+    <!-- Script to toggle sidebar on mobile and hide header -->
     <script>
         const menuToggle = document.getElementById('menu-toggle');
         const menuContent = document.getElementById('menu-content');
-        
+        const topBar = document.getElementById('top-bar');
+
         menuToggle.addEventListener('change', function() {
             if (menuToggle.checked) {
                 menuContent.classList.remove('-translate-x-full');
                 menuContent.classList.add('translate-x-0');
                 menuContent.setAttribute('aria-hidden', 'false');
+                topBar.classList.add('hidden');  // Hide the top bar
             } else {
                 menuContent.classList.remove('translate-x-0');
                 menuContent.classList.add('-translate-x-full');
                 menuContent.setAttribute('aria-hidden', 'true');
+                topBar.classList.remove('hidden');  // Show the top bar again
             }
         });
     </script>
