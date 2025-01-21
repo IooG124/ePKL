@@ -2,8 +2,8 @@
 
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
-Route::get('/login', [Controllers\RoutesController::class, 'vLogin']);
 Route::get('/', [Controllers\RoutesController::class, 'vAbsen']);
 Route::get('/Siswa', [Controllers\RoutesController::class, 'vDSiswa']);
 Route::get('/Guru', [Controllers\RoutesController::class, 'vDGuru']);
@@ -15,4 +15,9 @@ Route::get('/Profile', [Controllers\RoutesController::class, 'vProfile']);
 
 
 
+
+Route::get('/login', [Controllers\RoutesController::class, 'vLogin']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/faces', [Controllers\RoutesController::class, 'vScan']);
 

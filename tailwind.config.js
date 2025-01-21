@@ -16,7 +16,8 @@ export default {
                 back: '#C5DDDD',
                 content: '#E3FFFF',
                 blueSide: '#001185',
-                hoverBlue: '#2839AD'
+                hoverBlue: '#2839AD',
+                blueish: '#2F77FF'
             },
             fontSize: {
                 cpy: ['8px', '10px'],
