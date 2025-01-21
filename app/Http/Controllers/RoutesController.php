@@ -10,4 +10,8 @@ class RoutesController extends Controller{
       public function vAbsen(){
             return view('absen');
       }
+
+      public function vScan(){
+            return view('scanface');
+      }
 }
