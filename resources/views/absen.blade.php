@@ -7,9 +7,6 @@ $user = [
     'nama' => 'Superadmin',
 ];
 
-// Get the current date in the correct format
-$tanggalHariIni = date('d / m / Y');
-
 // Contoh data dari database (sesuaikan dengan query database Anda)
 $dataChart = [
     // ['tanggal' => '19/01/2025', 'total_jam' => 8],
@@ -31,7 +28,9 @@ foreach ($dataChart as $data) {
   <!-- Header -->
   <div class="flex justify-between items-center border-b pb-4 mb-6">
     <h1 class="text-2xl font-bold text-gray-800"><?php echo htmlspecialchars($user['nama']); ?></h1>
-    <p class="text-sm text-gray-500">Hari ini : <?php echo $tanggalHariIni; ?></p>
+    <p class="text-lg text-gray-600">
+        Hari ini: <span id="current-date"><?php echo date('d / m / Y'); ?></span>
+    </p>
   </div>
 
   <!-- Chart Section -->

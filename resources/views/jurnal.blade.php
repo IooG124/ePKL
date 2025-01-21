@@ -4,8 +4,8 @@ date_default_timezone_set('Asia/Jakarta');
 
 // Simulasi data pengguna yang login
 $user = [
-    'username' => 'john_doe',
-    'nama' => 'John Doe',
+    'username' => 'Superadmin',
+    'nama' => 'Superadmin',
 ];
 
 // Format tanggal hari ini
