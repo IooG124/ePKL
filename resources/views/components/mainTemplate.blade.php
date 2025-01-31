@@ -61,6 +61,10 @@
                         <i class="fi fi-ss-memo-circle-check text-xl"></i>
                         <h1 class="text-lg md:text-xl">Verifikasi Jurnal</h1>
                     </x-link-side>
+                    <x-link-side href="/TambahPeriode">
+                        <i class="fi fi-ss-memo-circle-check text-xl"></i>
+                        <h1 class="text-lg md:text-xl">Tambah Periode</h1>
+                    </x-link-side>
                 </div>
                 
                 <div class="flex flex-col gap-2 pt-4">

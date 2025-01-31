@@ -42,6 +42,10 @@ class RoutesController extends Controller {
     public function vVerifikasi() {
         return view('verif');
     }
+    
+    public function vTambahPeriode() {
+      return view(view: 'tambahPeriode');
+  }
 
     public function vScan() {
         return view('scanface');

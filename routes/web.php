@@ -13,6 +13,7 @@ Route::get('/Verifikasi', [Controllers\RoutesController::class, 'vVerifikasi']);
 Route::get('/Dudi', [Controllers\RoutesController::class, 'vDUDI']);
 Route::get('/TambahDudi', [Controllers\RoutesController::class, 'vTambahDUDI']);
 Route::get('/Profile', [Controllers\RoutesController::class, 'vProfile']);
+Route::get('/TambahPeriode', [Controllers\RoutesController::class, 'vTambahPeriode']);
 
 
 
