@@ -1,3 +1,0 @@
-<x-authTemplate>
-      
-</x-authTemplate>
