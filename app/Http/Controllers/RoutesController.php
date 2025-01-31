@@ -23,6 +23,10 @@ class RoutesController extends Controller {
         return view('ddudi');
     }
 
+    public function vTambahDUDI() {
+      return view('TambahDudi');
+  }
+
     public function vJurnal() {
         return view('jurnal');
     }

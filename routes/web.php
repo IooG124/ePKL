@@ -11,6 +11,7 @@ Route::get('/Jurnal', [Controllers\RoutesController::class, 'vJurnal']);
 Route::get('/ListJurnal', [Controllers\RoutesController::class, 'vListJurnal']);
 Route::get('/Verifikasi', [Controllers\RoutesController::class, 'vVerifikasi']);
 Route::get('/Dudi', [Controllers\RoutesController::class, 'vDUDI']);
+Route::get('/TambahDudi', [Controllers\RoutesController::class, 'vTambahDUDI']);
 Route::get('/Profile', [Controllers\RoutesController::class, 'vProfile']);
 
 

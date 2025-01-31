@@ -69,6 +69,10 @@
                         <i class="fi fi-ss-employees-woman-man text-xl"></i>
                         <h1 class="text-lg md:text-xl">Tambah Guru</h1>
                     </x-link-side>
+                    <x-link-side href="/TambahDudi">
+                        <i class="fi fi-ss-employees-woman-man text-xl"></i>
+                        <h1 class="text-lg md:text-xl">Tambah DUDI</h1>
+                    </x-link-side>
                     <x-link-side href="/Profile">
                         <i class="fi fi-ss-user text-xl"></i>
                         <h1 class="text-lg md:text-xl">Profile</h1>
