@@ -69,15 +69,15 @@ $tanggalHariIni = date('d / m / Y'); // Example: "20 / 01 / 2025"
                                 foreach ($dudis as $index => $dudi) {
                                     $rowClass = $index % 2 == 0 ? 'bg-gray-50' : 'bg-white'; // Alternating row colors
                                     $rowNumber = $index + 1; // To display proper row number starting from 1
-                                    echo "<tr class='{$rowClass} hover:bg-gray-100 transition-all duration-200'>";
+                                    echo "<tr id='dudi-{$dudi['id']}' class='{$rowClass} hover:bg-gray-100 transition-all duration-200'>";
                                     echo "<td class='px-6 py-4 text-center border-b'>{$rowNumber}</td>";
                                     echo "<td class='px-6 py-4 border-b'>{$dudi['namadudi']}</td>";
                                     echo "<td class='px-6 py-4 border-b'>{$dudi['lokasi']}</td>";
                                     echo "<td class='px-6 py-4 border-b'>{$dudi['contactperson']}</td>"; 
                                     echo "<td class='px-6 py-4 border-b text-center'>
                                             <div class='flex justify-center gap-2'>
-                                                <button class='bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300'>Edit</button>
-                                                <button class='bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300'>Delete</button>
+                                                <button class='bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300' onclick='editDUDI(" . htmlspecialchars(json_encode($dudi)) . ")'>Edit</button>
+                                                <button class='bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300' onclick='deleteDUDI({$dudi['id']})'>Hapus</button>
                                             </div>
                                           </td>";
                                     echo "</tr>";
@@ -92,7 +92,7 @@ $tanggalHariIni = date('d / m / Y'); // Example: "20 / 01 / 2025"
         </div>
     </div>
 
-    <!-- JavaScript for Modal -->
+    <!-- JavaScript for Modal and Buttons -->
     <script>
         // JavaScript to handle modal functionality
         const addDUDIButton = document.getElementById('addDUDIButton');
@@ -123,6 +123,28 @@ $tanggalHariIni = date('d / m / Y'); // Example: "20 / 01 / 2025"
             // Close the modal after submission
             addDUDIModal.classList.add('hidden');
         });
+
+        // Edit DUDI Function
+        function editDUDI(dudi) {
+            // Prefill the modal or a new form with the current DUDI data
+            document.getElementById('namaDUDI').value = dudi.namadudi;
+            document.getElementById('lokasiDUDI').value = dudi.lokasi;
+            document.getElementById('contactPerson').value = dudi.contactperson;
+            addDUDIModal.classList.remove('hidden');
+        }
+
+        // Delete DUDI Function
+        function deleteDUDI(id) {
+            const confirmation = confirm('Apakah Anda yakin ingin menghapus DUDI ini?');
+            if (confirmation) {
+                // Remove the row from the table (for frontend deletion)
+                const row = document.getElementById(`dudi-${id}`);
+                row.remove();
+
+                // You can make an AJAX call here to delete the DUDI from the database
+                console.log('DUDI dengan ID ' + id + ' dihapus.');
+            }
+        }
 
         // Update the date dynamically using JavaScript
         setInterval(() => {
