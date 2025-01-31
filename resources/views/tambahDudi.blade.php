@@ -9,6 +9,38 @@ $tanggalHariIni = date('d / m / Y'); // Example: "20 / 01 / 2025"
 <x-mainTemplate>
     <!-- Main container -->
     <div class="container mx-auto px-6 py-8">
+        <!-- Add DUDI Button positioned at the top right -->
+        <div class="flex justify-end mb-6">
+            <button id="addDUDIButton" class="bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+                + Tambah DUDI
+            </button>
+        </div>
+
+        <!-- Pop-up Modal -->
+        <div id="addDUDIModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-[450px]">
+                <h2 class="text-2xl font-bold mb-4">Tambah DUDI</h2>
+                <form id="addDUDIForm">
+                    <div class="mb-4">
+                        <label for="namaDUDI" class="block text-gray-700 font-bold">Nama Industri</label>
+                        <input type="text" id="namaDUDI" name="namaDUDI" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="lokasiDUDI" class="block text-gray-700 font-bold">Lokasi Industri</label>
+                        <input type="text" id="lokasiDUDI" name="lokasiDUDI" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="contactPerson" class="block text-gray-700 font-bold">Contact Person</label>
+                        <input type="text" id="contactPerson" name="contactPerson" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" id="cancelDUDIButton" class="bg-gray-500 text-white py-2 px-4 rounded-lg mr-2">Batal</button>
+                        <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- Table Card -->
         <div class="bg-[#f9fafb] rounded-lg p-6 shadow-md">
             <!-- Header Section with Date -->

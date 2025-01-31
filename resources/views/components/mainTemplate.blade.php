@@ -61,6 +61,10 @@
                         <i class="fi fi-ss-memo-circle-check text-xl"></i>
                         <h1 class="text-lg md:text-xl">Verifikasi Jurnal</h1>
                     </x-link-side>
+                    <x-link-side href="/TambahPeriode">
+                        <i class="fi fi-ss-memo-circle-check text-xl"></i>
+                        <h1 class="text-lg md:text-xl">Tambah Periode</h1>
+                    </x-link-side>
                 </div>
                 
                 <div class="flex flex-col gap-2 pt-4">
@@ -68,6 +72,10 @@
                     <x-link-side href="/Guru">
                         <i class="fi fi-ss-employees-woman-man text-xl"></i>
                         <h1 class="text-lg md:text-xl">Tambah Guru</h1>
+                    </x-link-side>
+                    <x-link-side href="/TambahDudi">
+                        <i class="fi fi-ss-employees-woman-man text-xl"></i>
+                        <h1 class="text-lg md:text-xl">Tambah DUDI</h1>
                     </x-link-side>
                     <x-link-side href="/Profile">
                         <i class="fi fi-ss-user text-xl"></i>
