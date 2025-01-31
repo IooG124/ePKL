@@ -1,3 +1,16 @@
+<?php
+    // Prevent Caching
+    header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+
+    // Set timezone to Asia/Makassar (Jakarta time)
+    date_default_timezone_set('Asia/Makassar');
+    $currentDate = date('d / m / Y'); // Format date as dd / mm / yyyy
+?>
+
 <x-mainTemplate>
     <!-- Main container -->
     <div class="container mx-auto px-6 py-8">
@@ -10,7 +23,7 @@
 
         <!-- Pop-up Modal -->
         <div id="addTeacherModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-[450px]">
                 <h2 class="text-2xl font-bold mb-4">Tambah Guru</h2>
                 <form id="addTeacherForm">
                     <div class="mb-4">
@@ -31,54 +44,61 @@
                     </div>
                     <div class="flex justify-end">
                         <button type="button" id="cancelTeacherButton" class="bg-gray-500 text-white py-2 px-4 rounded-lg mr-2">Batal</button>
-                        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg">Tambah</button>
+                        <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300">Tambah</button>
                     </div>
                 </form>
             </div>
         </div>
 
         <!-- Table Card -->
-        <div class="rounded-lg p-6">
+        <div class="rounded-lg p-6 bg-[#f9fafb] shadow-md">
             <!-- Header Section with Date -->
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-3xl font-bold text-gray-800">Daftar Guru</h1>
-                <p class="text-lg text-gray-600">
-                    Hari ini: <span id="current-date"><?php echo date('d / m / Y'); ?></span>
+                <h1 class="text-3xl font-bold text-[#2d3748]">Daftar Guru</h1>
+                <p class="text-lg text-[#4a5568]">
+                    Hari ini: <span id="current-date"><?php echo $currentDate; ?></span>
                 </p>
             </div>
 
             <!-- Table -->
-            <table class="min-w-full table-auto text-sm text-left text-gray-700 border-collapse">
-                <thead class="text-black">
-                    <tr>
-                        <th class="px-6 py-3 border-b">No</th>
-                        <th class="px-6 py-3 border-b">Username</th>
-                        <th class="px-6 py-3 border-b">Password</th>
-                        <th class="px-6 py-3 border-b">Nama</th>
-                        <th class="px-6 py-3 border-b">NIP</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                        if (!empty($teachers)) {
-                            foreach ($teachers as $index => $teacher) {
-                                $rowClass = $index % 2 == 0 ? 'bg-white' : 'bg-gray-100'; // Alternating row colors
-                                $rowNumber = $index + 1; // Row number starts from 1
+            <div class="overflow-x-auto rounded-lg shadow-sm">
+                <table class="min-w-full table-auto text-sm text-gray-900 border-collapse rounded-lg">
+                    <thead class="bg-[#e2e8f0]">
+                        <tr>
+                            <th class="px-6 py-3 text-center text-xs w-1/12">No</th>
+                            <th class="px-6 py-3 w-1/4">Username</th>
+                            <th class="px-6 py-3 w-1/4">Nama</th>
+                            <th class="px-6 py-3 w-1/4">NIP</th>
+                            <th class="px-6 py-3 text-center w-1/6">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            if (!empty($teachers)) {
+                                foreach ($teachers as $index => $teacher) {
+                                    $rowClass = $index % 2 == 0 ? 'bg-white' : 'bg-gray-50'; // Alternating row colors
+                                    $rowNumber = $index + 1; // Row number starts from 1
 
-                                echo "<tr class='{$rowClass} transition-colors duration-200'>";
-                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($rowNumber) . "</td>";
-                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($teacher['username']) . "</td>";
-                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($teacher['password']) . "</td>";
-                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($teacher['nama']) . "</td>";
-                                echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($teacher['nip']) . "</td>";
-                                echo "</tr>";
+                                    echo "<tr class='{$rowClass} hover:bg-gray-100 transition-all duration-200'>";
+                                    echo "<td class='px-6 py-4 text-center'>" . htmlspecialchars($rowNumber) . "</td>";
+                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($teacher['username']) . "</td>";
+                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($teacher['nama']) . "</td>";
+                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($teacher['nip']) . "</td>";
+                                    echo "<td class='px-6 py-4 text-center'>
+                                            <div class='flex justify-center'>
+                                                <button class='bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 mr-2' onclick='editTeacher(" . htmlspecialchars(json_encode($teacher)) . ")'>Edit</button>
+                                                <button class='bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300'>Hapus</button>
+                                            </div>
+                                          </td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='5' class='text-center text-gray-500 py-4'>Tidak ada data guru.</td></tr>";
                             }
-                        } else {
-                            echo "<tr><td colspan='5' class='text-center text-gray-500 py-4'>Tidak ada data guru.</td></tr>";
-                        }
-                    ?>
-                </tbody>
-            </table>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -113,11 +133,15 @@
             addTeacherModal.classList.add('hidden');
         });
 
-        // Update the date dynamically
-        document.getElementById("current-date").innerText = new Date().toLocaleDateString("id-ID", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric"
-        });
+        // Update the date dynamically every minute
+        setInterval(() => {
+            const currentDate = new Date();
+            const formattedDate = currentDate.toLocaleDateString('id-ID', {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            });
+            document.getElementById('current-date').textContent = formattedDate;
+        }, 60000); // Update every minute
     </script>
 </x-mainTemplate>

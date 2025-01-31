@@ -1,11 +1,11 @@
 <?php
 // Set the timezone (adjust if needed)
-date_default_timezone_set('Asia/Jakarta');
+date_default_timezone_set('Asia/Makassar'); // Set to your desired timezone
 
 // Simulasi data pengguna yang login
 $user = [
-    'username' => 'john_doe',
-    'nama' => 'John Doe',
+    'username' => 'Superadmin',
+    'nama' => 'Superadmin',
 ];
 
 // Format tanggal hari ini
@@ -84,6 +84,13 @@ $tanggalInput = date('Y-m-d\TH:i'); // Format for datetime-local input
   </form>
 
   <script>
+    // JavaScript Configuration: Client-Side Date Update
+    setInterval(() => {
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString('en-GB'); // Update with the correct format
+      document.getElementById('current-date').textContent = formattedDate;
+    }, 60000); // Update every minute
+
     function updateFileName() {
         const input = document.getElementById('file-upload');
         const fileName = document.getElementById('file-name');

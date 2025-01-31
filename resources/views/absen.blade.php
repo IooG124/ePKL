@@ -1,14 +1,19 @@
 <?php
 // Set default timezone (adjust as per your location)
-date_default_timezone_set('Asia/Jakarta'); // Change to your timezone if needed
+date_default_timezone_set('Asia/Makassar'); // Change to your timezone if needed
 
 // Contoh data pengguna dan tanggal
 $user = [
     'nama' => 'Superadmin',
 ];
 
-// Get the current date in the correct format
-$tanggalHariIni = date('d / m / Y');
+// Prevent Caching
+header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 
 // Contoh data dari database (sesuaikan dengan query database Anda)
 $dataChart = [
@@ -31,7 +36,9 @@ foreach ($dataChart as $data) {
   <!-- Header -->
   <div class="flex justify-between items-center border-b pb-4 mb-6">
     <h1 class="text-2xl font-bold text-gray-800"><?php echo htmlspecialchars($user['nama']); ?></h1>
-    <p class="text-sm text-gray-500">Hari ini : <?php echo $tanggalHariIni; ?></p>
+    <p class="text-lg text-gray-600">
+        Hari ini: <span id="current-date"><?php echo date('d / m / Y'); ?></span>
+    </p>
   </div>
 
   <!-- Chart Section -->
@@ -50,7 +57,7 @@ foreach ($dataChart as $data) {
   <!-- Table Section -->
   <div class="bg-white p-6 rounded-md shadow-md">
     <table class="min-w-full table-auto text-sm text-left text-gray-700">
-      <thead class="bg-blue-100">
+      <thead class="bg-[#e2e8f0]">
         <tr>
           <th class="px-6 py-3 border-b">No</th>
           <th class="px-6 py-3 border-b">Tanggal</th>
@@ -111,5 +118,12 @@ foreach ($dataChart as $data) {
         }
       }
     });
+
+    // JavaScript Configuration: Client-Side Date Update
+    setInterval(() => {
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString('en-GB'); // Update with the correct format
+      document.getElementById('current-date').textContent = formattedDate;
+    }, 60000); // Update every minute
   </script>
 </x-mainTemplate>
