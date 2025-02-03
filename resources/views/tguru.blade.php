@@ -9,6 +9,39 @@
     // Set timezone to Asia/Makassar (Jakarta time)
     date_default_timezone_set('Asia/Makassar');
     $currentDate = date('d / m / Y'); // Format date as dd / mm / yyyy
+
+    $teachers = [
+        [
+            'username' => 'budi_santoso',
+            'nama' => 'Budi Santoso',
+            'nip' => '19781231 202012 1 001',
+            'password' => 'password123'
+        ],
+        [
+            'username' => 'ani_wibowo',
+            'nama' => 'Ani Wibowo',
+            'nip' => '19850615 201301 2 002',
+            'password' => 'ani1234'
+        ],
+        [
+            'username' => 'dewi_kartika',
+            'nama' => 'Dewi Kartika',
+            'nip' => '19900222 201801 3 003',
+            'password' => 'dewi5678'
+        ],
+        [
+            'username' => 'hendra_wijaya',
+            'nama' => 'Hendra Wijaya',
+            'nip' => '19891111 201501 4 004',
+            'password' => 'hendra8765'
+        ],
+        [
+            'username' => 'siti_rahma',
+            'nama' => 'Siti Rahma',
+            'nip' => '19930808 202001 5 005',
+            'password' => 'siti4321'
+        ]
+    ];
 ?>
 
 <x-mainTemplate>
@@ -107,10 +140,13 @@
         const addTeacherButton = document.getElementById('addTeacherButton');
         const addTeacherModal = document.getElementById('addTeacherModal');
         const cancelTeacherButton = document.getElementById('cancelTeacherButton');
+        const addTeacherForm = document.getElementById('addTeacherForm');
 
         // Show modal
         addTeacherButton.addEventListener('click', () => {
             addTeacherModal.classList.remove('hidden');
+            // Clear the form for new entry
+            addTeacherForm.reset();
         });
 
         // Hide modal
@@ -119,7 +155,6 @@
         });
 
         // Handle form submission
-        const addTeacherForm = document.getElementById('addTeacherForm');
         addTeacherForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -133,15 +168,34 @@
             addTeacherModal.classList.add('hidden');
         });
 
-        // Update the date dynamically every minute
-        setInterval(() => {
-            const currentDate = new Date();
-            const formattedDate = currentDate.toLocaleDateString('id-ID', {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric"
-            });
-            document.getElementById('current-date').textContent = formattedDate;
-        }, 60000); // Update every minute
+        // Function to edit teacher
+        function editTeacher(teacher) {
+            // Show the modal
+            addTeacherModal.classList.remove('hidden');
+            
+            // Fill the form with teacher data
+            document.getElementById('username').value = teacher.username;
+            document.getElementById('nama').value = teacher.nama;
+            document.getElementById('nip').value = teacher.nip;
+            
+            // Empty the password field for security
+            document.getElementById('password').value = ''; 
+            
+            // Change the form submit logic to update
+            addTeacherForm.onsubmit = (e) => {
+                e.preventDefault();
+
+                const updatedData = new FormData(addTeacherForm);
+                const updatedTeacher = Object.fromEntries(updatedData.entries());
+
+                console.log(updatedTeacher); // Send this data to update the teacher's details (e.g., AJAX or API call)
+
+                // Close the modal
+                addTeacherModal.classList.add('hidden');
+            };
+        }
+
+        // Update the current date on page load
+        document.getElementById('current-date').textContent = '<?php echo $currentDate; ?>';
     </script>
 </x-mainTemplate>

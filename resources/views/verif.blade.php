@@ -8,6 +8,7 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+
 ?>
 
 <x-mainTemplate>
@@ -38,8 +39,8 @@ header("Pragma: no-cache");
                     <tbody>
                         <?php 
                         $jurnals = [
-                            ["nama" => "Budi", "nis" => "12345", "foto" => "foto1.jpg", "isi" => "Isi jurnal Budi", "verified" => false],
-                            ["nama" => "Ani", "nis" => "67890", "foto" => "foto2.jpg", "isi" => "Isi jurnal Ani", "verified" => true],
+                            ["nama" => "Dio", "nis" => "123456", "foto" => "foto1.jpg", "isi" => "Isi jurnal Dio", "verified" => false],
+                                ["nama" => "Wika", "nis" => "654321", "foto" => "foto2.jpg", "isi" => "Isi jurnal Wika", "verified" => true],
                         ];
                         if (!empty($jurnals)) {
                             foreach ($jurnals as $index => $jurnal) {

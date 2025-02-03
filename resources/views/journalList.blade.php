@@ -46,8 +46,8 @@
                     <tbody>
                         <?php 
                             $jurnals = [
-                                ["nama" => "Budi", "nis" => "12345", "foto" => "foto1.jpg", "isi" => "Isi jurnal Budi", "verified" => false],
-                                ["nama" => "Ani", "nis" => "67890", "foto" => "foto2.jpg", "isi" => "Isi jurnal Ani", "verified" => true],
+                                ["nama" => "Dio", "nis" => "123456", "foto" => "foto1.jpg", "isi" => "Isi jurnal Dio", "verified" => false],
+                                ["nama" => "Wika", "nis" => "654321", "foto" => "foto2.jpg", "isi" => "Isi jurnal Wika", "verified" => true],
                             ];
                             if (!empty($jurnals)) {
                                 foreach ($jurnals as $index => $jurnal) {
