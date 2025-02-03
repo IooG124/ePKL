@@ -6,10 +6,6 @@
         ["namasiswa" => "Siswa 3", "namadudi" => "DUDI 3", "tanggalmulai" => "2025-03-01", "tanggalberakhir" => "2025-06-01", "id" => 3]
     ];
 
-    // Set the timezone (adjust if needed)
-    date_default_timezone_set('Asia/Makassar'); // Set to your desired timezone
-
-    // Format tanggal hari ini
     $tanggalHariIni = date('d / m / Y'); // Example: "20 / 01 / 2025"
 ?>
 
