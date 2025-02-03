@@ -5,8 +5,8 @@
     // Example of fetching student data from a database
     $students = [
         // Example data:
-        // ['username' => 'User1', 'password' => 'Pass1', 'nama' => 'Nama 1', 'no_absen' => '01', 'kelas' => 'X-A'],
-        // ['username' => 'User2', 'password' => 'Pass2', 'nama' => 'Nama 2', 'no_absen' => '02', 'kelas' => 'X-B'],
+        ['username' => 'Dio', 'password' => '123456789', 'nama' => 'Dio', 'nis' => '123456', 'no_absen' => '12', 'kelas' => 'XII-RPL-3'],
+        ['username' => 'Wika', 'password' => '123456789', 'nama' => 'Wika', 'nis' => '654321', 'no_absen' => '24', 'kelas' => 'XII-RPL-3'],
     ];
 
     // Prevent Caching Issues
@@ -18,20 +18,19 @@
 ?>
 
 <x-mainTemplate>
-    <!-- Main container -->
     <div class="container mx-auto px-6 py-8">
-        <!-- Add/Edit Student Button positioned at the top right -->
         <div class="flex justify-end mb-6">
             <button id="addStudentButton" class="bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
                 + Tambah Siswa
             </button>
         </div>
 
-        <!-- Pop-up Form (Wider) -->
+        <!-- Modal for Adding/Editing Student -->
         <div id="addStudentModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-[450px]"> <!-- Wider Modal -->
-                <h2 class="text-2xl font-bold mb-4">Tambah Siswa</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg w-[450px]">
+                <h2 id="modalTitle" class="text-2xl font-bold mb-4">Tambah Siswa</h2>
                 <form id="addStudentForm">
+                    <input type="hidden" id="studentIndex">
                     <div class="mb-4">
                         <label for="username" class="block text-gray-700 font-bold">Username</label>
                         <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded-lg p-2" required>
@@ -41,9 +40,8 @@
                         <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-lg p-2" required>
                     </div>
                     <div class="mb-4">
-                        <label for="confirm_password" class="block text-gray-700 font-bold">Konfirmasi Password</label>
-                        <input type="password" id="confirm_password" name="confirm_password" class="w-full border border-gray-300 rounded-lg p-2" required>
-                        <p id="passwordError" class="text-red-600 text-sm hidden">Password tidak cocok.</p>
+                        <label for="nis" class="block text-gray-700 font-bold">NIS</label>
+                        <input type="text" id="nis" name="nis" class="w-full border border-gray-300 rounded-lg p-2" required>
                     </div>
                     <div class="mb-4">
                         <label for="nama" class="block text-gray-700 font-bold">Nama Lengkap</label>
@@ -59,55 +57,52 @@
                     </div>
                     <div class="flex justify-end">
                         <button type="button" id="cancelButton" class="bg-gray-500 text-white py-2 px-4 rounded-lg mr-2">Batal</button>
-                        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg">Tambah</button>
+                        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- Table Card -->
         <div class="rounded-lg p-6 bg-[#f9fafb] shadow-md">
-            <!-- Header Section with Date -->
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold text-[#2d3748]">Daftar Siswa</h1>
-                <p class="text-lg text-[#4a5568]">
-                    Hari ini: <span id="current-date"><?php echo date('d / m / Y'); ?></span>
-                </p>
+                <p class="text-lg text-[#4a5568]">Hari ini: <span id="current-date"><?php echo date('d / m / Y'); ?></span></p>
             </div>
 
-            <!-- Table -->
             <div class="overflow-x-auto rounded-lg shadow-sm">
                 <table class="min-w-full table-auto text-sm text-gray-900 border-collapse rounded-lg">
-                    <thead class="bg-[#e2e8f0]">
+                    <thead class="bg-[#e2e8f0] text-left">
                         <tr>
                             <th class="px-6 py-3 text-center w-1/12 text-xs">No</th>
-                            <th class="px-6 py-3 w-1/4">Username</th>
-                            <th class="px-6 py-3 w-1/4">Nama</th>
+                            <th class="px-6 py-3 w-1/6">Username</th>
+                            <th class="px-6 py-3 w-1/6">Nama</th>
+                            <th class="px-6 py-3 w-1/6">NIS</th>
                             <th class="px-6 py-3 w-1/6">No. Absen</th>
-                            <th class="px-6 py-3 w-1/4">Kelas</th>
+                            <th class="px-6 py-3 w-1/6">Kelas</th>
                             <th class="px-6 py-3 text-center w-1/6">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="studentTableBody">
                         <?php 
                             if (!empty($students)) {
                                 foreach ($students as $index => $student) {
-                                    echo "<tr class='bg-gray-50 hover:bg-gray-100 transition-all duration-200'>";
-                                    echo "<td class='px-6 py-4 text-center'>" . ($index + 1) . "</td>";
-                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($student['username']) . "</td>";
-                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($student['nama']) . "</td>";
-                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($student['no_absen']) . "</td>";
-                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($student['kelas']) . "</td>";
-                                    echo "<td class='px-6 py-4 text-center'>
-                                            <div class='flex space-x-2 justify-center'>
-                                                <button class='bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300' onclick='editStudent(" . htmlspecialchars(json_encode($student)) . ")'>Edit</button>
-                                                <button class='bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300'>Hapus</button>
-                                            </div>
-                                          </td>";
-                                    echo "</tr>";
+                                    echo "<tr class='bg-gray-50 hover:bg-gray-100 transition-all duration-200'>"
+                                        . "<td class='px-6 py-4 text-center'>" . ($index + 1) . "</td>"
+                                        . "<td class='px-6 py-4'>" . htmlspecialchars($student['username']) . "</td>"
+                                        . "<td class='px-6 py-4'>" . htmlspecialchars($student['nama']) . "</td>"
+                                        . "<td class='px-6 py-4'>" . htmlspecialchars($student['nis']) . "</td>"
+                                        . "<td class='px-6 py-4'>" . htmlspecialchars($student['no_absen']) . "</td>"
+                                        . "<td class='px-6 py-4'>" . htmlspecialchars($student['kelas']) . "</td>"
+                                        . "<td class='px-6 py-4 text-center'>
+                                              <div class='flex space-x-2 justify-center'>
+                                                  <button class='bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 editButton' data-index='$index'>Edit</button>
+                                                  <button class='bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300'>Hapus</button>
+                                              </div>
+                                          </td>"
+                                    . "</tr>";
                                 }
                             } else {
-                                echo "<tr><td colspan='6' class='text-center text-gray-500 py-4'>Tidak ada data siswa.</td></tr>";
+                                echo "<tr><td colspan='7' class='text-center text-gray-500 py-4'>Tidak ada data siswa.</td></tr>";
                             }
                         ?>
                     </tbody>
@@ -117,59 +112,80 @@
     </div>
 
     <script>
-        const addStudentModal = document.getElementById('addStudentModal');
-        const cancelButton = document.getElementById('cancelButton');
-        const addStudentButton = document.getElementById('addStudentButton');
-        const addStudentForm = document.getElementById('addStudentForm');
-        const passwordField = document.getElementById('password');
-        const confirmPasswordField = document.getElementById('confirm_password');
-        const passwordError = document.getElementById('passwordError');
-
-        // Show modal
-        addStudentButton.addEventListener('click', () => {
-            resetForm();
-            addStudentModal.classList.remove('hidden');
+        // Show Add Student Modal
+        document.getElementById('addStudentButton').addEventListener('click', function() {
+            document.getElementById('addStudentModal').classList.remove('hidden');
+            document.getElementById('modalTitle').innerText = 'Tambah Siswa';
+            document.getElementById('addStudentForm').reset();
+            document.getElementById('studentIndex').value = '';
         });
-        cancelButton.addEventListener('click', () => addStudentModal.classList.add('hidden'));
 
-        // Edit student data
-        function editStudent(student) {
-            document.getElementById('username').value = student.username;
-            document.getElementById('password').value = student.password;
-            document.getElementById('confirm_password').value = student.password;
-            document.getElementById('nama').value = student.nama;
-            document.getElementById('no_absen').value = student.no_absen;
-            document.getElementById('kelas').value = student.kelas;
+        // Close the modal
+        document.getElementById('cancelButton').addEventListener('click', function() {
+            document.getElementById('addStudentModal').classList.add('hidden');
+        });
 
-            addStudentModal.classList.remove('hidden');
-        }
+        // Edit Student
+        document.querySelectorAll('.editButton').forEach(button => {
+            button.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                const students = <?php echo json_encode($students); ?>;
+                const student = students[index];
 
-        // Validate password confirmation
-        addStudentForm.addEventListener('submit', (e) => {
+                document.getElementById('modalTitle').innerText = 'Edit Siswa';
+                document.getElementById('username').value = student.username;
+                document.getElementById('password').value = student.password;
+                document.getElementById('nis').value = student.nis;
+                document.getElementById('nama').value = student.nama;
+                document.getElementById('no_absen').value = student.no_absen;
+                document.getElementById('kelas').value = student.kelas;
+                document.getElementById('studentIndex').value = index;
+
+                document.getElementById('addStudentModal').classList.remove('hidden');
+            });
+        });
+
+        // Submit the form to add/edit student
+        document.getElementById('addStudentForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (passwordField.value !== confirmPasswordField.value) {
-                passwordError.classList.remove('hidden');
+
+            const index = document.getElementById('studentIndex').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const nis = document.getElementById('nis').value;
+            const nama = document.getElementById('nama').value;
+            const noAbsen = document.getElementById('no_absen').value;
+            const kelas = document.getElementById('kelas').value;
+
+            if (index === '') {
+                // Add new student
+                const newRow = `
+                    <tr class="bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                        <td class="px-6 py-4 text-center">${document.querySelectorAll('.editButton').length + 1}</td>
+                        <td class="px-6 py-4">${username}</td>
+                        <td class="px-6 py-4">${nama}</td>
+                        <td class="px-6 py-4">${nis}</td>
+                        <td class="px-6 py-4">${noAbsen}</td>
+                        <td class="px-6 py-4">${kelas}</td>
+                        <td class="px-6 py-4 text-center">
+                            <div class="flex space-x-2 justify-center">
+                                <button class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 editButton" data-index="${index}">Edit</button>
+                                <button class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>`;
+                document.getElementById('studentTableBody').insertAdjacentHTML('beforeend', newRow);
             } else {
-                passwordError.classList.add('hidden');
-                console.log(Object.fromEntries(new FormData(addStudentForm).entries()));
-                addStudentModal.classList.add('hidden');
+                // Update existing student
+                const row = document.querySelectorAll('.editButton')[index].closest('tr');
+                row.cells[1].innerText = username;
+                row.cells[2].innerText = nama;
+                row.cells[3].innerText = nis;
+                row.cells[4].innerText = noAbsen;
+                row.cells[5].innerText = kelas;
             }
+
+            document.getElementById('addStudentModal').classList.add('hidden');
         });
-
-        // Reset form
-        function resetForm() {
-            addStudentForm.reset();
-            passwordError.classList.add('hidden');
-        }
-
-        // Update date dynamically
-        function updateDate() {
-            const currentDate = new Date();
-            const formattedDate = currentDate.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            document.getElementById('current-date').textContent = formattedDate;
-        }
-
-        setInterval(updateDate, 60000); // Update every minute
-        updateDate(); // Initial update
     </script>
 </x-mainTemplate>

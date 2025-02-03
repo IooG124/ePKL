@@ -90,7 +90,7 @@
             <!-- Table -->
             <div class="overflow-x-auto rounded-lg shadow-sm">
                 <table class="min-w-full table-auto text-sm text-gray-900 border-collapse rounded-lg">
-                    <thead class="bg-[#e2e8f0]">
+                    <thead class="bg-[#e2e8f0] text-left">
                         <tr>
                             <th class="px-6 py-3 text-center text-xs w-1/12 border-b">No</th>
                             <th class="px-6 py-3 w-1/4 border-b">Nama Siswa</th>
