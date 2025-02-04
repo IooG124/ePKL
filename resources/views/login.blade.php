@@ -17,7 +17,7 @@
                             <option value="WFH">PKL Dari Rumah</option>
                             <option value="LAP">PKL di Lapangan</option>
                         </select>
-                        <div class="w-full flex justify-end mt-4">
+                        <div class="w-full flex justify-end mt-8">
                             <button type="submit" class="bg-blueish px-7 py-3 text-white text-lg font-semibold rounded-lg">Login</button>
                         </div>
                     </form>

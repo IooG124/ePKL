@@ -1,41 +1,13 @@
 <?php
-// Set default timezone (adjust as per your location)
-date_default_timezone_set('Asia/Makassar'); // Change to your timezone if needed
-
-// Contoh data pengguna dan tanggal
 $user = [
     'nama' => 'Superadmin',
 ];
 
-// Prevent Caching
-header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
-header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-
-
-// Contoh data dari database (sesuaikan dengan query database Anda)
-$dataChart = [
-    // ['tanggal' => '19/01/2025', 'total_jam' => 8],
-    // ['tanggal' => '20/01/2025', 'total_jam' => 7],
-    // ['tanggal' => '21/01/2025', 'total_jam' => 9],
-    // ['tanggal' => '22/01/2025', 'total_jam' => 5],
-    // ['tanggal' => '23/01/2025', 'total_jam' => 6],
-];
-
-// Ekstrak data untuk grafik
-$labels = [];
-$values = [];
-foreach ($dataChart as $data) {
-    $labels[] = $data['tanggal'];
-    $values[] = $data['total_jam'];
-}
 ?>
 <x-mainTemplate>
   <!-- Header -->
   <div class="flex justify-between items-center border-b pb-4 mb-6">
-    <h1 class="text-2xl font-bold text-gray-800"><?php echo htmlspecialchars($user['nama']); ?></h1>
+    <h1 class="text-2xl font-bold text-gray-800"></h1>
     <p class="text-lg text-gray-600">
         Hari ini: <span id="current-date"><?php echo date('d / m / Y'); ?></span>
     </p>
@@ -43,7 +15,7 @@ foreach ($dataChart as $data) {
 
   <!-- Chart Section -->
   <div class="bg-white p-8 rounded-md shadow-md mb-8">
-    <?php if (empty($dataChart)): ?>
+    <?php if (empty($attendances)): ?>
       <div class="flex items-center justify-center h-32">
         <p class="text-center text-gray-500">Tidak ada data untuk ditampilkan</p>
       </div>
@@ -60,36 +32,38 @@ foreach ($dataChart as $data) {
       <thead class="bg-[#e2e8f0]">
         <tr>
           <th class="px-6 py-3 border-b">No</th>
+          <th class="px-6 py-3 border-b">Kondisi</th>
           <th class="px-6 py-3 border-b">Tanggal</th>
-          <th class="px-6 py-3 border-b">Login Kerja</th>
-          <th class="px-6 py-3 border-b">Logout Kerja</th>
-          <th class="px-6 py-3 border-b">Bukti Presensi</th>
+          <th class="px-6 py-3 border-b">Waktu</th>
           <th class="px-6 py-3 border-b">Total Jam Kerja</th>
         </tr>
       </thead>
       <tbody class="bg-white">
-        <?php if (empty($dataChart)): ?>
-          <tr>
-            <td colspan="6" class="px-6 py-4 text-center text-gray-500">Tidak ada data untuk ditampilkan</td>
-          </tr>
-        <?php else: ?>
-          <?php foreach ($dataChart as $index => $data): ?>
+        
+          {{-- <?php foreach ($dataChart as $index => $data): ?>
             <tr class="hover:bg-blue-50">
-              <td class="px-6 py-4 border-b"><?php echo $index + 1; ?></td>
               <td class="px-6 py-4 border-b"><?php echo $data['tanggal']; ?></td>
               <td class="px-6 py-4 border-b">08:00</td> <!-- Contoh data login -->
-              <td class="px-6 py-4 border-b">16:00</td> <!-- Contoh data logout -->
-              <td class="px-6 py-4 border-b">Ya</td> <!-- Contoh data presensi -->
               <td class="px-6 py-4 border-b"><?php echo $data['total_jam']; ?> Jam</td>
             </tr>
-          <?php endforeach; ?>
-        <?php endif; ?>
+            <?php endforeach; ?> --}}
+            <?php $no = 1;  ?>
+            @foreach($attendances as $attendance)
+            <tr>
+                <td class="px-6 py-4 border-b"><?php echo $no++; ?></td>
+                <td class="px-6 py-4 border-b">{{ $attendance->condition }}</td> 
+                <td class="px-6 py-4 border-b">{{ $attendance->login_date }}</td>
+                <td class="px-6 py-4 border-b">{{ $attendance->login_time }}</td>
+                <td class="px-6 py-4 border-b">{{ $attendance->total_login_hours ?? '-' }}</td>
+            </tr>
+
+            @endforeach
       </tbody>
     </table>
   </div>
 
   <!-- ChartJS Configuration -->
-  <script>
+  {{-- <script>
     const ctx = document.getElementById('barChart').getContext('2d');
     const barChart = new Chart(ctx, {
       type: 'bar',
@@ -125,5 +99,5 @@ foreach ($dataChart as $data) {
       const formattedDate = currentDate.toLocaleDateString('en-GB'); // Update with the correct format
       document.getElementById('current-date').textContent = formattedDate;
     }, 60000); // Update every minute
-  </script>
+  </script> --}}
 </x-mainTemplate>

@@ -28,12 +28,12 @@
                 <div class="text-3xl md:text-4xl font-bold tracking-[.5rem] pb-8 pt-[2rem] uppercase text-center">JOURNAL</div>
                 <div class="flex items-center gap-3 border-b-2 border-b-white pb-6 w-full">
                     <div class="w-12 h-12 bg-white rounded-full"></div>
-                    <h1 class="text-xl md:text-2xl uppercase tracking-wider">Superadmin</h1>
+                    <h1 class="text-xl md:text-2xl uppercase tracking-wider">TEST</h1>
                 </div>
 
                 <div class="flex flex-col gap-2 pt-4">
                     <h1 class="text-xl md:text-2xl font-normal tracking-wider py-2 uppercase">Siswa</h1>
-                    <x-link-side href="/">
+                    <x-link-side href="/absen">
                         <i class="fi fi-ss-face-viewfinder text-xl"></i>
                         <h1 class="text-lg md:text-xl">Absen</h1>
                     </x-link-side>
@@ -77,17 +77,23 @@
                         <i class="fi fi-ss-employees-woman-man text-xl"></i>
                         <h1 class="text-lg md:text-xl">Tambah DUDI</h1>
                     </x-link-side>
-                    <x-link-side href="/Profile">
-                        <i class="fi fi-ss-user text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Profile</h1>
-                    </x-link-side>
-                    <x-link-side href="#">
-                        <i class="fi fi-ss-exit text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Log Out</h1>
-                    </x-link-side>
                 </div>
             </div>
-            <div class="text-center text-sm text-slate-500 py-4">&copy; 2024 SMK Negeri 1 Denpasar</div>
+            <div>
+                <x-link-side href="/Profile">
+                    <i class="fi fi-ss-user text-xl"></i>
+                    <h1 class="text-lg md:text-xl">Profile</h1>
+                </x-link-side>
+
+                <x-link-side href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fi fi-ss-exit text-xl"></i>
+                    <h1 class="text-lg md:text-xl">Log Out</h1>
+                </x-link-side>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <div class="text-center text-sm text-slate-500 py-4">&copy; 2024 SMK Negeri 1 Denpasar</div>
+            </div>
         </div>
         
         <!-- Main Content -->
