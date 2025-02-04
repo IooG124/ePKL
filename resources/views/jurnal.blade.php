@@ -1,23 +1,10 @@
 <?php
-// Set the timezone (adjust if needed)
-date_default_timezone_set('Asia/Makassar'); // Set to your desired timezone
-
 // Simulasi data pengguna yang login
 $user = [
     'username' => 'Superadmin',
     'nama' => 'Superadmin',
 ];
 
-    // Prevent Caching
-    header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
-
-    // Set timezone to Asia/Makassar (Jakarta time)
-    date_default_timezone_set('Asia/Makassar');
-    $currentDate = date('d / m / Y'); // Format date as dd / mm / yyyy
     $tanggalInput = date('Y-m-d\TH:i'); // Format for datetime-local input
 ?>
 

@@ -1,20 +1,10 @@
 <?php
-    // Set the timezone to Asia/Makassar (Jakarta Time Zone)
-    date_default_timezone_set('Asia/Makassar');
-
     // Example of fetching student data from a database
     $students = [
         // Example data:
         ['username' => 'Dio', 'password' => '123456789', 'nama' => 'Dio', 'nis' => '123456', 'no_absen' => '12', 'kelas' => 'XII-RPL-3'],
         ['username' => 'Wika', 'password' => '123456789', 'nama' => 'Wika', 'nis' => '654321', 'no_absen' => '24', 'kelas' => 'XII-RPL-3'],
     ];
-
-    // Prevent Caching Issues
-    header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
 ?>
 
 <x-mainTemplate>
