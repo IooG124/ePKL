@@ -1,3 +1,40 @@
+<?php
+    $currentDate = date('d / m / Y'); // Format date as dd / mm / yyyy
+
+    $teachers = [
+        [
+            'username' => 'budi_santoso',
+            'nama' => 'Budi Santoso',
+            'nip' => '19781231 202012 1 001',
+            'password' => 'password123'
+        ],
+        [
+            'username' => 'ani_wibowo',
+            'nama' => 'Ani Wibowo',
+            'nip' => '19850615 201301 2 002',
+            'password' => 'ani1234'
+        ],
+        [
+            'username' => 'dewi_kartika',
+            'nama' => 'Dewi Kartika',
+            'nip' => '19900222 201801 3 003',
+            'password' => 'dewi5678'
+        ],
+        [
+            'username' => 'hendra_wijaya',
+            'nama' => 'Hendra Wijaya',
+            'nip' => '19891111 201501 4 004',
+            'password' => 'hendra8765'
+        ],
+        [
+            'username' => 'siti_rahma',
+            'nama' => 'Siti Rahma',
+            'nip' => '19930808 202001 5 005',
+            'password' => 'siti4321'
+        ]
+    ];
+?>
+
 <x-mainTemplate>
     <!-- Main container -->
     <div class="container mx-auto px-6 py-8">
@@ -71,52 +108,44 @@
             </div>
 
             <!-- Table -->
-            <table class="min-w-full table-auto text-sm text-left text-gray-700 border-collapse">
-                <thead class="text-black">
-                    <tr>
-                        <th class="px-6 py-3 border-b">No</th>
-                        <th class="px-6 py-3 border-b">Username</th>
-                        <th class="px-6 py-3 border-b">Password</th>
-                        <th class="px-6 py-3 border-b">Nama</th>
-                        <th class="px-6 py-3 border-b">NIP</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if (!empty($teachers)) {
-                        foreach ($teachers as $index => $teacher) {
-                            // Menentukan kelas baris untuk warna bergantian
-                            $rowClass = $index % 2 == 0 ? 'bg-white' : 'bg-gray-100'; // Alternating row colors
-                            $rowNumber = $index + 1; // Nomor baris dimulai dari 1
-                    
-                            // Membuka tag <tr> untuk setiap guru
-                            echo "<tr class='{$rowClass} transition-colors duration-200'>";
-                    
-                            // Nomor urut
-                            echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($rowNumber) . '</td>';
-                    
-                            // Username - jika menggunakan relasi user
-                            echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($teacher->user->username ?? 'Tidak Ada') . '</td>';
-                    
-                            // Password
-                            echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($teacher->user->password ?? 'Tidak Ada') . '</td>';
-                    
-                            // Nama guru
-                            echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($teacher->nama_guru) . '</td>';
-                    
-                            // NIP
-                            echo "<td class='px-6 py-4 border-b'>" . htmlspecialchars($teacher->NIP) . '</td>';
-                    
-                            // Menutup tag <tr>
-                            echo '</tr>';
-                        }
-                    } else {
-                        // Jika tidak ada data guru
-                        echo "<tr><td colspan='5' class='text-center text-gray-500 py-4'>Tidak ada data guru.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+            <div class="overflow-x-auto rounded-lg shadow-sm">
+                <table class="min-w-full table-auto text-sm text-gray-900 border-collapse rounded-lg">
+                    <thead class="bg-[#e2e8f0] text-left">
+                        <tr>
+                            <th class="px-6 py-3 text-center text-xs w-1/12">No</th>
+                            <th class="px-6 py-3 w-1/4">Username</th>
+                            <th class="px-6 py-3 w-1/4">Nama</th>
+                            <th class="px-6 py-3 w-1/4">NIP</th>
+                            <th class="px-6 py-3 text-center w-1/6">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            if (!empty($teachers)) {
+                                foreach ($teachers as $index => $teacher) {
+                                    $rowClass = $index % 2 == 0 ? 'bg-white' : 'bg-gray-50'; // Alternating row colors
+                                    $rowNumber = $index + 1; // Row number starts from 1
+
+                                    echo "<tr class='{$rowClass} hover:bg-gray-100 transition-all duration-200'>";
+                                    echo "<td class='px-6 py-4 text-center'>" . htmlspecialchars($rowNumber) . "</td>";
+                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($teacher['username']) . "</td>";
+                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($teacher['nama']) . "</td>";
+                                    echo "<td class='px-6 py-4'>" . htmlspecialchars($teacher['nip']) . "</td>";
+                                    echo "<td class='px-6 py-4 text-center'>
+                                            <div class='flex justify-center'>
+                                                <button class='bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 mr-2' onclick='editTeacher(" . htmlspecialchars(json_encode($teacher)) . ")'>Edit</button>
+                                                <button class='bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300'>Hapus</button>
+                                            </div>
+                                          </td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='5' class='text-center text-gray-500 py-4'>Tidak ada data guru.</td></tr>";
+                            }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -125,10 +154,13 @@
         const addTeacherButton = document.getElementById('addTeacherButton');
         const addTeacherModal = document.getElementById('addTeacherModal');
         const cancelTeacherButton = document.getElementById('cancelTeacherButton');
+        const addTeacherForm = document.getElementById('addTeacherForm');
 
         // Show modal
         addTeacherButton.addEventListener('click', () => {
             addTeacherModal.classList.remove('hidden');
+            // Clear the form for new entry
+            addTeacherForm.reset();
         });
 
         // Hide modal
@@ -137,7 +169,6 @@
         });
 
         // Handle form submission
-        const addTeacherForm = document.getElementById('addTeacherForm');
         addTeacherForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -151,11 +182,34 @@
             addTeacherModal.classList.add('hidden');
         });
 
-        // Update the date dynamically
-        document.getElementById("current-date").innerText = new Date().toLocaleDateString("id-ID", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric"
-        });
+        // Function to edit teacher
+        function editTeacher(teacher) {
+            // Show the modal
+            addTeacherModal.classList.remove('hidden');
+            
+            // Fill the form with teacher data
+            document.getElementById('username').value = teacher.username;
+            document.getElementById('nama').value = teacher.nama;
+            document.getElementById('nip').value = teacher.nip;
+            
+            // Empty the password field for security
+            document.getElementById('password').value = ''; 
+            
+            // Change the form submit logic to update
+            addTeacherForm.onsubmit = (e) => {
+                e.preventDefault();
+
+                const updatedData = new FormData(addTeacherForm);
+                const updatedTeacher = Object.fromEntries(updatedData.entries());
+
+                console.log(updatedTeacher); // Send this data to update the teacher's details (e.g., AJAX or API call)
+
+                // Close the modal
+                addTeacherModal.classList.add('hidden');
+            };
+        }
+
+        // Update the current date on page load
+        document.getElementById('current-date').textContent = '<?php echo $currentDate; ?>';
     </script>
 </x-mainTemplate>

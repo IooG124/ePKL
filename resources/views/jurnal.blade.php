@@ -1,16 +1,11 @@
 <?php
-// Set the timezone (adjust if needed)
-date_default_timezone_set('Asia/Makassar'); // Set to your desired timezone
-
 // Simulasi data pengguna yang login
 $user = [
     'username' => 'Superadmin',
     'nama' => 'Superadmin',
 ];
 
-// Format tanggal hari ini
-$tanggalHariIni = date('d / m / Y'); // Example: "20 / 01 / 2025"
-$tanggalInput = date('Y-m-d\TH:i'); // Format for datetime-local input
+    $tanggalInput = date('Y-m-d\TH:i'); // Format for datetime-local input
 ?>
 
 <x-mainTemplate>

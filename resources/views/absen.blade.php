@@ -3,6 +3,22 @@ $user = [
     'nama' => 'Superadmin',
 ];
 
+// Contoh data dari database (sesuaikan dengan query database Anda)
+$dataChart = [
+    ['tanggal' => '19/01/2025', 'total_jam' => 8],
+    ['tanggal' => '20/01/2025', 'total_jam' => 7],
+    ['tanggal' => '21/01/2025', 'total_jam' => 9],
+    ['tanggal' => '22/01/2025', 'total_jam' => 5],
+    ['tanggal' => '23/01/2025', 'total_jam' => 6],
+];
+
+// Ekstrak data untuk grafik
+$labels = [];
+$values = [];
+foreach ($dataChart as $data) {
+    $labels[] = $data['tanggal'];
+    $values[] = $data['total_jam'];
+}
 ?>
 <x-mainTemplate>
   <!-- Header -->

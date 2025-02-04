@@ -1,9 +1,40 @@
 <?php
-// Set the timezone (adjust if needed)
-date_default_timezone_set('Asia/Makassar'); // Set to your desired timezone
+    $currentDate = date('d / m / Y'); // Format date as dd / mm / yyyy
 
-// Format tanggal hari ini
-$tanggalHariIni = date('d / m / Y'); // Example: "20 / 01 / 2025"
+    $dudis = [
+        [
+            'id' => 1,
+            'namadudi' => 'PT. Teknologi Nusantara',
+            'lokasi' => 'Jakarta, Indonesia',
+            'contactperson' => 'Budi Santoso (08123456789)'
+        ],
+        [
+            'id' => 2,
+            'namadudi' => 'CV. Inovasi Kreatif',
+            'lokasi' => 'Bandung, Indonesia',
+            'contactperson' => 'Ani Wibowo (08129876543)'
+        ],
+        [
+            'id' => 3,
+            'namadudi' => 'UD. Sukses Mandiri',
+            'lokasi' => 'Surabaya, Indonesia',
+            'contactperson' => 'Dewi Kartika (08234567890)'
+        ],
+        [
+            'id' => 4,
+            'namadudi' => 'PT. Digital Solution',
+            'lokasi' => 'Yogyakarta, Indonesia',
+            'contactperson' => 'Hendra Wijaya (08567891234)'
+        ],
+        [
+            'id' => 5,
+            'namadudi' => 'CV. Media Cerdas',
+            'lokasi' => 'Semarang, Indonesia',
+            'contactperson' => 'Siti Rahma (08134567891)'
+        ]
+    ];
+    
+
 ?>
 
 <x-mainTemplate>
@@ -47,14 +78,14 @@ $tanggalHariIni = date('d / m / Y'); // Example: "20 / 01 / 2025"
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold text-[#2d3748]">Daftar DUDI</h1>
                 <p class="text-lg text-[#4a5568]">
-                    Hari ini: <span id="current-date"><?php echo $tanggalHariIni; ?></span>
+                    Hari ini: <span id="current-date"><?php echo $currentDate; ?></span>
                 </p>
             </div>
 
             <!-- Table -->
             <div class="overflow-x-auto rounded-lg shadow-sm">
                 <table class="min-w-full table-auto text-sm text-gray-900 border-collapse rounded-lg">
-                    <thead class="bg-[#e2e8f0]">
+                    <thead class="bg-[#e2e8f0]  text-left">
                         <tr>
                             <th class="px-6 py-3 text-center text-xs w-1/12 border-b">No</th>
                             <th class="px-6 py-3 w-1/4 border-b">Nama DUDI</th>
