@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DudiController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\JournalController;
@@ -11,6 +12,9 @@ use App\Http\Controllers\RoutesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
+
+//Dashboard
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 // Login dan Logout Routes
 Route::get('/login', [RoutesController::class, 'vLogin'])->name('login');
