@@ -22,6 +22,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/absen', [AttendanceController::class, 'showAttendance'])->name('absen');
     Route::get('/dudi', [DudiController::class, 'index'])->name('dudi');
     Route::get('guru', [TeacherController::class , 'index'])->name('guru');
+    Route::get('/guru', [TeacherController::class, 'index'])->name('guru');
+
     Route::get('/listDudi', [DudiController::class, 'listDUdi'])->name('listDudi');
     Route::get('/dudi/listDudi', [DudiController::class, 'listDudi'])->name('dudi.listDudi');
     Route::resource('dudi', DudiController::class);
@@ -40,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/journals/verify/{id}', [JournalController::class, 'verify'])->name('journals.verify');
 
     Route::resource('siswa', StudentController::class);
+    Route::get('/siswa', [StudentController::class, 'index'])->name('siswa');
 
     Route::get('/Dudi', [RoutesController::class, 'vDUDI']);
     Route::get('/TambahDudi', [RoutesController::class, 'vTambahDUDI']);

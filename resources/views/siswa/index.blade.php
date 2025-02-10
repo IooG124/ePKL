@@ -2,6 +2,11 @@
 <x-mainTemplate>
     <div class="container mx-auto px-6 py-8">
         <div class="rounded-lg p-6 bg-[#f9fafb] shadow-md">
+            <div class="flex justify-end mb-6">
+                <a href="{{ route('siswa.create') }}" class="bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+                    + Tambah Siswa
+                </a>
+            </div>
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold text-[#2d3748]">Daftar Siswa</h1>
                 <p class="text-lg text-[#4a5568]">Hari ini: <span id="current-date">{{ now()->format('d / m / Y') }}</span></p>

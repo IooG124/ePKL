@@ -11,7 +11,7 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::all();
-        
+
         return view('teachers.index', compact('teachers'));
     }
 
@@ -26,7 +26,7 @@ class TeacherController extends Controller
     {
         $request->validate([
             'username' => 'required|unique:teachers',
-            'nama' => 'required',
+            'name' => 'required',
             'nip' => 'required|unique:teachers',
             'password' => 'required|min:6',
             'alamat' => 'required',
@@ -35,7 +35,7 @@ class TeacherController extends Controller
 
         Teacher::create([
             'username' => $request->username,
-            'nama' => $request->nama,
+            'name' => $request->name,
             'nip' => $request->nip,
             'password' => bcrypt($request->password),
             'alamat' => $request->alamat,
@@ -59,7 +59,7 @@ class TeacherController extends Controller
 
         $request->validate([
             'username' => 'required|unique:teachers,username,' . $teacher->id,
-            'nama' => 'required',
+            'name' => 'required',
             'nip' => 'required|unique:teachers,nip,' . $teacher->id,
             'password' => 'nullable|min:6',
             'alamat' => 'required',
@@ -68,7 +68,7 @@ class TeacherController extends Controller
 
         $teacher->update([
             'username' => $request->username,
-            'nama' => $request->nama,
+            'name' => $request->name,
             'nip' => $request->nip,
             'password' => $request->password ? bcrypt($request->password) : $teacher->password,
             'alamat' => $request->alamat,

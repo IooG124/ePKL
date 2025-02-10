@@ -2,7 +2,7 @@
 <x-mainTemplate>
     <div class="container mx-auto px-6 py-8">
         <div class="flex justify-end mb-6">
-            <a href="{{ route('siswa.index') }}" class="bg-gray-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-600 transition duration-300">
+            <a href="{{ route('siswa') }}" class="bg-gray-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-600 transition duration-300">
                 Kembali
             </a>
         </div>

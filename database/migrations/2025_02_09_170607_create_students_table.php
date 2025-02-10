@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nis');
             $table->string('kelas');
             $table->string('jurusan');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('password')->nullable();
             $table->timestamps();
         });

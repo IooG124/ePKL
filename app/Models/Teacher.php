@@ -11,7 +11,7 @@ class Teacher extends Model
 
     protected $fillable = [
         'username',
-        'nama',
+        'name',
         'nip',
         'password',
         'alamat',

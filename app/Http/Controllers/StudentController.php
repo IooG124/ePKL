@@ -40,7 +40,7 @@ class StudentController extends Controller
             'jurusan' => $request->jurusan,
         ]);
 
-        return redirect()->route('siswa.index')->with('success', 'Siswa berhasil ditambahkan');
+        return redirect()->route('siswa')->with('success', 'Siswa berhasil ditambahkan');
     }
 
     public function destroy($id)
@@ -48,6 +48,6 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $student->delete();
 
-        return redirect()->route('siswa.index')->with('success', 'Siswa berhasil dihapus');
+        return redirect()->route('siswa')->with('success', 'Siswa berhasil dihapus');
     }
 }
