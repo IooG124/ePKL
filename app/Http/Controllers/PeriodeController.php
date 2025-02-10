@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dudi;
 use App\Models\Periode;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -11,76 +12,81 @@ class PeriodeController extends Controller
     // Show list of periods (index)
     public function index()
     {
-        $periodePKL = Periode::all();
-
-        return view('periode.index', compact('periodePKL'));
+        $periodes = Periode::with(['students', 'dudi'])->get(); // Ambil semua data dengan relasi
+        return view('periode.index', compact('periodes'));
     }
+
 
     // Show the create form
     public function create()
     {
-        $students = Student::all();
+        $students = Student::all(); // Ambil semua siswa dari database
+        $dudis = Dudi::all(); // Ambil semua DUDI dari database
 
-        // Return the create form view for adding a new period
-        return view('periode.create', compact('students'));
+        return view('periode.create', compact('students', 'dudis'));
     }
+
 
     // Store a new period
     public function store(Request $request)
     {
-        // Validate the incoming request
         $request->validate([
-            'namasiswa' => 'required|string|max:255',
-            'namadudi' => 'required|string|max:255',
+            'namasiswa' => 'required|array', // Bisa lebih dari satu siswa
+            'namasiswa.*' => 'exists:students,id', // Pastikan siswa ada di database
+            'namadudi' => 'required|exists:dudis,id', // Pastikan DUDI ada di database
             'tanggalmulai' => 'required|date',
             'tanggalberakhir' => 'required|date|after:tanggalmulai',
         ]);
 
-        // Create a new period in the database
-        Periode::create([
-            'namasiswa' => $request->namasiswa,
-            'namadudi' => $request->namadudi,
+        // Simpan periode
+        $periode = Periode::create([
+            'dudi_id' => $request->namadudi,
             'tanggalmulai' => $request->tanggalmulai,
             'tanggalberakhir' => $request->tanggalberakhir,
         ]);
 
-        // Redirect to the periods index page with a success message
-        return redirect()->route('periode.index')->with('success', 'Periode PKL created successfully');
+        // Simpan hubungan siswa ke periode di tabel pivot `periode_student`
+        $periode->students()->attach($request->namasiswa);
+
+        return redirect()->route('periode.index')->with('success', 'Periode berhasil ditambahkan');
     }
+
 
     // Show the edit form
     public function edit($id)
     {
-        $periode = Periode::findOrFail($id);
+        $periode = Periode::with(['students', 'dudi'])->findOrFail($id); // Ambil data periode + relasinya
+        $students = Student::all(); // Ambil semua siswa
+        $dudis = Dudi::all(); // Ambil semua DUDI
 
-        return view('periode.edit', compact('periode'));
+        return view('periode.edit', compact('periode', 'students', 'dudis'));
     }
+
 
     // Update the period
     public function update(Request $request, $id)
     {
-        // Validate the incoming request
         $request->validate([
-            'namasiswa' => 'required|string|max:255',
-            'namadudi' => 'required|string|max:255',
+            'students' => 'required|array',
+            'students.*' => 'exists:students,id',
+            'dudi_id' => 'required|exists:dudis,id',
             'tanggalmulai' => 'required|date',
             'tanggalberakhir' => 'required|date|after:tanggalmulai',
         ]);
 
-        // Find the period by its ID
         $periode = Periode::findOrFail($id);
-
-        // Update the period with the new data
         $periode->update([
-            'namasiswa' => $request->namasiswa,
-            'namadudi' => $request->namadudi,
+            'dudi_id' => $request->dudi_id,
             'tanggalmulai' => $request->tanggalmulai,
             'tanggalberakhir' => $request->tanggalberakhir,
         ]);
 
-        // Redirect to the periods list page with a success message
-        return redirect()->route('periode.index')->with('success', 'Periode PKL updated successfully');
+        // Sync siswa ke periode
+        $periode->students()->sync($request->students);
+
+        return redirect()->route('periode.index')->with('success', 'Periode berhasil diperbarui!');
     }
+
 
     // Delete the period
     public function destroy($id)

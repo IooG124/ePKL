@@ -7,20 +7,26 @@
             <form action="{{ route('periode.store') }}" method="POST">
                 @csrf
 
+                <!-- Dropdown untuk Multiple Siswa -->
                 <div class="mb-4">
                     <label for="namasiswa" class="block text-gray-700 font-bold">Nama Siswa</label>
-                    <!-- Dropdown for Students -->
-                    <select name="namasiswa" id="namasiswa" class="w-full border border-gray-300 rounded-lg p-2" required>
-                        <option value="">Pilih Siswa</option>
+                    <select name="namasiswa[]" id="namasiswa" multiple class="w-full border border-gray-300 rounded-lg p-2" required>
                         @foreach($students as $student)
-                            <option value="{{ $student->name }}">{{ $student->name }}</option>
+                            <option value="{{ $student->id }}">{{ $student->name }} - {{ $student->nis }}</option>
                         @endforeach
                     </select>
+                    <p class="text-sm text-gray-500 mt-1">Tekan Ctrl (Windows) atau Command (Mac) untuk memilih lebih dari satu siswa.</p>
                 </div>
 
+                <!-- Dropdown untuk DUDI -->
                 <div class="mb-4">
                     <label for="namadudi" class="block text-gray-700 font-bold">Nama DUDI</label>
-                    <input type="text" name="namadudi" id="namadudi" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    <select name="namadudi" id="namadudi" class="w-full border border-gray-300 rounded-lg p-2" required>
+                        <option value="">Pilih DUDI</option>
+                        @foreach($dudis as $dudi)
+                            <option value="{{ $dudi->id }}">{{ $dudi->namadudi }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-4">
