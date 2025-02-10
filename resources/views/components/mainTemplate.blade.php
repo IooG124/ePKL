@@ -8,7 +8,7 @@
 
     // Set timezone to Asia/Makassar (Jakarta time)
     date_default_timezone_set('Asia/Makassar');
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,63 +33,71 @@
             </label>
         </div>
         <input type="checkbox" id="menu-toggle" class="hidden">
-        
+
         <!-- Sidebar -->
         <div id="menu-content" class="min-h-screen sticky left-0 top-0 bg-blueSide flex flex-col justify-between text-white py-4 px-4 w-full md:w-[20rem] md:flex md:overflow-hidden transition-transform transform -translate-x-full md:translate-x-0" aria-hidden="true">
             <div class="overflow-y-auto h-full">
                 <div class="text-3xl md:text-4xl font-bold tracking-[.5rem] pb-8 pt-[2rem] uppercase text-center">JOURNAL</div>
+
+                <!-- User Profile Display -->
                 <div class="flex items-center gap-3 border-b-2 border-b-white pb-6 w-full">
-                    <div class="w-12 h-12 bg-white rounded-full"></div>
-                    <h1 class="text-xl md:text-2xl uppercase tracking-wider">TEST</h1>
+                    <h1 class="text-xl md:text-2xl uppercase tracking-wider">
+                        @if(Auth::user()->role->role_name == 'students') <!-- If user is a student -->
+                            Hi! {{ Auth::user()->student->name }} <!-- Display student name -->
+                        @elseif(Auth::user()->role->role_name == 'teachers') <!-- If user is a teacher -->
+                            Hi! {{ Auth::user()->teacher->name }} <!-- Display teacher name -->
+                        @else
+                            Hi! {{ Auth::user()->name }} <!-- Default to user name if no role match -->
+                        @endif
+                    </h1> <!-- Display logged-in user's name -->
                 </div>
 
-                <div class="flex flex-col gap-2 pt-4">
-                    <h1 class="text-xl md:text-2xl font-normal tracking-wider py-2 uppercase">Siswa</h1>
-                    <x-link-side href="/absen">
-                        <i class="fi fi-ss-face-viewfinder text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Absen</h1>
-                    </x-link-side>
-                    <x-link-side href="/Dudi">
-                        <i class="fi fi-ss-house-building text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Daftar DuDi</h1>
-                    </x-link-side>
-                    <x-link-side href="/Jurnal">
-                        <i class="fi fi-ss-to-do text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Tambah Jurnal</h1>
-                    </x-link-side>
-                    <x-link-side href="/ListJurnal">
-                        <i class="fi fi-ss-to-do text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Jurnal Harian</h1>
-                    </x-link-side>
-                </div>
-        
-                <div class="flex flex-col gap-2 pt-4">
-                    <h1 class="text-xl md:text-2xl font-normal tracking-wider uppercase py-2">Guru</h1>
-                    <x-link-side href="/Siswa">
-                        <i class="fi fi-ss-users-medical text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Tambah Siswa</h1>
-                    </x-link-side>
-                    <x-link-side href="/Verifikasi">
-                        <i class="fi fi-ss-memo-circle-check text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Verifikasi Jurnal</h1>
-                    </x-link-side>
-                    <x-link-side href="/TambahPeriode">
-                        <i class="fi fi-ss-memo-circle-check text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Tambah Periode</h1>
-                    </x-link-side>
-                </div>
-                
-                <div class="flex flex-col gap-2 pt-4">
-                    <h1 class="text-xl md:text-2xl font-normal tracking-wider uppercase py-2">Admin</h1>
-                    <x-link-side href="/Guru">
-                        <i class="fi fi-ss-employees-woman-man text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Tambah Guru</h1>
-                    </x-link-side>
-                    <x-link-side href="/TambahDudi">
-                        <i class="fi fi-ss-employees-woman-man text-xl"></i>
-                        <h1 class="text-lg md:text-xl">Tambah DUDI</h1>
-                    </x-link-side>
-                </div>
+                <!-- Navigation Links Based on Role -->
+                @if(Auth::user()->role->role_name == 'students')
+                    <div class="flex flex-col gap-2 pt-4">
+                        <h1 class="text-xl md:text-2xl font-normal tracking-wider py-2 uppercase">Siswa</h1>
+                        <x-link-side href="/absen">
+                            <i class="fi fi-ss-face-viewfinder text-xl"></i>
+                            <h1 class="text-lg md:text-xl">Absen</h1>
+                        </x-link-side>
+                        <x-link-side href="/dudi">
+                            <i class="fi fi-ss-house-building text-xl"></i>
+                            <h1 class="text-lg md:text-xl">Daftar DuDi</h1>
+                        </x-link-side>
+                        <x-link-side href="{{ route('journals.index') }}">
+                            <i class="fi fi-ss-to-do text-xl"></i>
+                            <h1 class="text-lg md:text-xl">Jurnal Harian</h1>
+                        </x-link-side>
+                    </div>
+                @elseif(Auth::user()->role->role_name == 'teachers')
+                    <div class="flex flex-col gap-2 pt-4">
+                        <h1 class="text-xl md:text-2xl font-normal tracking-wider uppercase py-2">Guru</h1>
+                        <x-link-side href="/siswa">
+                            <i class="fi fi-ss-users-medical text-xl"></i>
+                            <h1 class="text-lg md:text-xl">Tambah Siswa</h1>
+                        </x-link-side>
+                        <x-link-side href="{{ route('journals.verifyPage') }}">
+                            <i class="fi fi-ss-memo-circle-check text-xl"></i>
+                            <h1 class="text-lg md:text-xl">Verifikasi Jurnal</h1>
+                        </x-link-side>
+                        <x-link-side href="/periode">
+                            <i class="fi fi-ss-memo-circle-check text-xl"></i>
+                            <h1 class="text-lg md:text-xl">Tambah Periode</h1>
+                        </x-link-side>
+                    </div>
+                @elseif(Auth::user()->role->role_name == 'admin')
+                    <div class="flex flex-col gap-2 pt-4">
+                        <h1 class="text-xl md:text-2xl font-normal tracking-wider uppercase py-2">Admin</h1>
+                        <x-link-side href="{{ route('teachers.index') }}">
+                            <i class="fi fi-ss-employees-woman-man text-xl"></i>
+                            <h1 class="text-lg md:text-xl">Tambah Guru</h1>
+                        </x-link-side>
+                        <x-link-side href="/listDudi">
+                            <i class="fi fi-ss-employees-woman-man text-xl"></i>
+                            <h1 class="text-lg md:text-xl">Tambah DUDI</h1>
+                        </x-link-side>
+                    </div>
+                @endif
             </div>
             <div>
                 <x-link-side href="/Profile">
@@ -104,10 +112,11 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
+
                 <div class="text-center text-sm text-slate-500 py-4">&copy; 2024 SMK Negeri 1 Denpasar</div>
             </div>
         </div>
-        
+
         <!-- Main Content -->
         <div class="flex flex-col w-full h-full overflow-auto">
             <!-- Top Bar -->
@@ -120,15 +129,8 @@
                         <div class="w-6 h-[5px] bg-gray-700 rounded-full"></div>
                     </label>
                 </div>
-                <!-- Search Bar -->
-                <div id="search-bar" class="flex items-center bg-gray-200 px-4 py-2 rounded-lg shadow-md w-full md:w-auto transition-all duration-300 hover:bg-gray-300 focus-within:bg-gray-300">
-                    <label for="search" class="text-gray-600 cursor-pointer">
-                        <i class="fi fi-rr-search text-2xl"></i>
-                    </label>
-                    <input type="text" id="search" class="w-full md:w-[22rem] text-base md:text-lg bg-transparent border-none focus:outline-none placeholder:text-gray-400 ml-2" placeholder="Search..." aria-label="Search">
-                </div>
             </div>
-            
+
             <!-- Page Content -->
             <div class="flex flex-col m-8 bg-content h-full">
                 <div class="p-7 overflow-auto">

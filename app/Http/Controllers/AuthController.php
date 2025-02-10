@@ -7,19 +7,29 @@ use App\Models\User;
 use App\Models\Attendance;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
         $request->validate([
-            'username' => 'required|string',
+            'username' => 'required_without:email|string',
+            'email' => 'required_without:username|email',
             'password' => 'required|string',
             'condition' => 'required|in:WFO,WFH,LAP',
         ]);
 
+        // Tentukan kolom yang digunakan untuk login (email untuk siswa, username untuk guru)
+        $credentials = [];
+        if ($request->has('email')) {
+            $credentials = ['email' => $request->email, 'password' => $request->password];
+        } elseif ($request->has('username')) {
+            $credentials = ['username' => $request->username, 'password' => $request->password];
+        }
+
         // Cek login user
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
             // Cek apakah sudah absen hari ini
@@ -27,49 +37,27 @@ class AuthController extends Controller
                 ->whereDate('login_date', now()->toDateString())
                 ->first();
 
-            // Jika sudah ada absensi hari ini
-            if ($todayAttendance) {
-                // Jika login_out sudah ada, buat data absensi baru
-                if ($todayAttendance->login_out) {
-                    // Buat absensi baru jika login_out sudah terisi
-                    $attendance = Attendance::create([
-                        'user_id' => $user->id,
-                        'condition' => $request->condition,
-                        'login_date' => now()->toDateString(),
-                        'login_time' => now()->toTimeString(),
-                        'total_login_hours' => 0,
-                    ]);
-
-                    // Simpan attendance_id yang baru di session atau cookie
-                    session(['attendance_id' => $attendance->id]);
-                    // Atau bisa menggunakan cookie
-                    // cookie()->queue('attendance_id', $attendance->id, 60);  // expired after 60 minutes
-                } else {
-                    // Jika login_out belum terisi, update waktu logout
-                    $todayAttendance->update(['login_out' => now()->toTimeString()]);
-                    session(['attendance_id' => $todayAttendance->id]);
-                }
-            } else {
-                // Jika absensi belum ada, buat absensi baru
-                $attendance = Attendance::create([
+            if (!$todayAttendance) {
+                // Jika tidak ada absensi hari ini, buat data absensi baru
+                Attendance::create([
                     'user_id' => $user->id,
                     'condition' => $request->condition,
                     'login_date' => now()->toDateString(),
                     'login_time' => now()->toTimeString(),
-                    'total_login_hours' => 0,
+                    'total_login_hours' => 0,  // Belum ada waktu logout, jadi 0
                 ]);
-
-                // Simpan attendance_id di session atau cookie
-                session(['attendance_id' => $attendance->id]);
-                // cookie()->queue('attendance_id', $attendance->id, 60);
+            } else {
+                // Jika sudah ada absensi, Anda bisa melakukan logika lain (misalnya, update waktu logout)
+                if (!$todayAttendance->login_out) {
+                    $todayAttendance->update(['login_out' => now()->toTimeString()]);
+                }
             }
 
             return redirect()->route('absen')->with('success', 'Login Berhasil');
         }
 
-        return back()->withErrors(['login' => 'Username atau password salah']);
+        return back()->withErrors(['login' => 'Email, username, atau password salah']);
     }
-
 
     public function logout()
     {

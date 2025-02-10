@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,7 +7,10 @@ use Carbon\Carbon;
 class Attendance extends Model
 {
     protected $fillable = ['user_id', 'condition', 'login_date', 'login_time', 'login_out', 'total_login_hours'];
-    
+
+    // Menyatakan bahwa login_date adalah tipe tanggal
+    protected $dates = ['login_date', 'login_time'];
+
     // Menyimpan waktu login_out jika ada
     protected static function boot()
     {

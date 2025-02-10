@@ -9,15 +9,20 @@ class Student extends Model
 {
     use HasFactory;
 
-    // Tentukan nama tabel yang benar
-    protected $table = 'students';  // <-- Pastikan ini adalah 'teachers', bukan 'gurus'
+    protected $table = 'students';
 
-    protected $fillable = ['nama_siswa', 'NIS', 'kelas', 'jurusan', 'user_id'];
+    protected $fillable = [
+        'name',
+        'nis',
+        'kelas',
+        'jurusan',
+        'email',
+    ];
 
-    // Menentukan kolom yang akan otomatis diisi dengan timestamp
-    public $timestamps = true; // ini adalah default, jadi bisa juga dihapus
-    
-    // Relasi ke User
+    protected $dates = [
+        'created_at', 'updated_at'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

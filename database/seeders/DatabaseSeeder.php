@@ -44,23 +44,17 @@ class DatabaseSeeder extends Seeder
             'role_id' => $roleStudent->id,
         ]
     );
-
-    // Mengambil user 'siswa' untuk memastikan sudah ada
-    $userSiswa = User::where('username', 'siswa')->first();
-    if ($userSiswa) {
-        Student::firstOrCreate(
-            ['NIS' => '30686'],
-            [
-                'nama_siswa' => 'Dio',
-                'kelas' => 'XII RPL 3',
-                'jurusan' => 'Rekayasa Perangkat Lunak',
-                'user_id' => $userSiswa->id,
-            ]
-        );
-    } else {
-        // Logika alternatif atau error handling jika user 'siswa' tidak ditemukan
-        Log::error('User dengan username "siswa" tidak ditemukan.');
-    }
+    User::firstOrCreate(
+        ['username' => 'siswa2'],
+        [
+            'password' => Hash::make('1234'),
+            'role_id' => $roleStudent->id,
+        ]
+    );
+    $this->call([
+        TeacherSeeder::class,
+        StudentSeeder::class,
+    ]);
 }
 
 }
