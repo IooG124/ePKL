@@ -1,34 +1,76 @@
-<x-authTemplate>
-    <div class="h-screen w-full flex justify-center items-center">
-        <div class="bg-white shadow-lg border-1 border-slate-400 rounded-lg">
-            <form action="/login" method="POST" class="w-full flex flex-col justify-center items-center px-9 py-14 gap-7">
-                @csrf
-                <h1 class="text-4xl font-bold uppercase p-4 mb-8 text-blueSide">Login</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In To Journal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- source:https://codepen.io/owaiswiz/pen/jOPvEPB -->
+<div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+    <div class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
+        <div class="lg:w-1/2 xl:w-5/12 p-4 sm:p-12 flex flex-col justify-center">
+            <div>
+                <img src="assets/images/skensa.png"
+                    class="w-32 mx-auto" />            
+            </div>
+            <div class="mt-8 flex flex-col items-center">
+                <h1 class="text-2xl xl:text-3xl font-extrabold">
+                    Log In
+                </h1>
+                <h4 class="mt-2 flex items-center text-gray-400 text-light text-center">Silahkan masukkan username dan password anda dengan baik dan benar.</h4>
+                <form class="w-full flex-1 mt-4" action="/login" method="post">
+                    @csrf
+                    <div class="flex flex-col items-center">
+                    </div>
 
-                <!-- Username or Email Input -->
-                <div class="flex items-center rounded-md border-2 border-slate-400 px-3 py-2 justify-between group focus-within:border-blueSide transition-all ease-in-out duration-200">
-                    <input type="text" id="username" name="username" class="focus:outline-none focus:ring-0 focus:border-transparent w-[30rem]" placeholder="Username atau Email...">
-                    <i class="fi fi-ss-portrait text-3xl text-slate-500 group-focus-within:text-blueSide transition-all ease-in-out duration-200 -mb-1"></i>
-                </div>
+                    <div class="mx-auto max-w-xs">
+                        <input
+                            class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                            type="text" placeholder="Username" name="username" id="username" />
+                        <input
+                            class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                            type="password" placeholder="Password" id="password" name="password" />
 
-                <!-- Password Input -->
-                <div class="flex items-center justify-between rounded-md border-2 border-slate-400 px-3 py-2 group focus-within:border-blueSide transition-all ease-in-out duration-200">
-                    <input type="password" id="password" name="password" class="focus:outline-none focus:ring-0 focus:border-transparent w-[30rem]" placeholder="Password...">
-                    <i class="fi fi-ss-key text-3xl text-slate-500 group-focus-within:text-blueSide transition-all ease-in-out duration-200 -mb-1"></i>
-                </div>
-
-                <!-- Condition (WFO, WFH, LAP) -->
-                <select name="condition" id="condition" class="group w-full px-3 py-2 border-2 border-slate-400 rounded-md appearance-none focus:border-blueSide transition-all ease-in-out duration-200">
-                    <option value="WFO">PKL Dari Kantor</option>
-                    <option value="WFH">PKL Dari Rumah</option>
-                    <option value="LAP">PKL di Lapangan</option>
-                </select>
-
-                <!-- Login Button -->
-                <div class="w-full flex justify-end mt-8">
-                    <button type="submit" class="bg-blueish px-7 py-3 text-white text-lg font-semibold rounded-lg">Login</button>
-                </div>
-            </form>
+                        <select name="condition" id="condition" class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 text-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5 appearance-none">
+                                <option value="WFO">PKL Dari Kantor</option>
+                                <option value="WFH">PKL Dari Rumah</option>
+                                <option value="LAP">PKL di Lapangan</option>
+                            </select>
+                        <button
+                            class="mt-5 tracking-wide font-semibold bg-blue-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" type="submit">
+                            <svg class="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                <circle cx="8.5" cy="7" r="4" />
+                                <path d="M20 8v6M23 11h-6" />
+                            </svg>
+                            <span class="ml-3">
+                                Log In
+                            </span>
+                        </button>
+                        <p class="mt-6 text-xs text-gray-600 text-center">
+                            I agree to abide by templatana's
+                            <a href="#" class="border-b border-gray-500 border-dotted">
+                                Terms of Service
+                            </a>
+                            and its
+                            <a href="#" class="border-b border-gray-500 border-dotted">
+                                Privacy Policy
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="flex-1 bg-white text-center hidden lg:flex">
+            <div class=" w-full bg-contain bg-center bg-no-repeat"
+                style="background-image: url('assets/images/bg-login-gif.gif');">
+            </div>
         </div>
     </div>
-</x-authTemplate>
+</div>
+</body>
+</html>
