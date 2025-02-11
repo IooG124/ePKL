@@ -50,7 +50,7 @@ class DudiController extends Controller
         Dudi::create($request->all());
 
         // Redirect to the DUDI list with a success message
-        return redirect()->route('dudi.index')->with('success', 'DUDI created successfully');
+        return redirect()->route('dudi.listDudi')->with('success', 'DUDI created successfully');
     }
 
     public function edit($id)
@@ -86,6 +86,6 @@ class DudiController extends Controller
         $dudi->delete();
 
         // Redirect to the DUDI list with a success message
-        return redirect()->route('dudi.index')->with('success', 'DUDI deleted successfully');
+        return redirect()->route('dudi.listDudi')->with('success', 'DUDI deleted successfully');
     }
 }

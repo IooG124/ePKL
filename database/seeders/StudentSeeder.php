@@ -14,8 +14,8 @@ class StudentSeeder extends Seeder
         // Membuat data user siswa dengan username
         $user = User::create([
             'username' => 'siswa1',  // Tambahkan username
-            'email' => 'siswa1@example.com',
-            'password' => Hash::make('passwordsiswa1'),
+            'email' => 'siswa1@email.com',
+            'password' => Hash::make('siswa1'),
             'role_id' => 3,  // ID untuk role student
         ]);
 
@@ -26,7 +26,7 @@ class StudentSeeder extends Seeder
             'name' => 'Siswa Satu',
             'kelas' => '12A',
             'jurusan' => 'IPA',
-            'email' => 'siswa1@example.com',
+            'email' => 'siswa1@email.com',
         ]);
     }
 }

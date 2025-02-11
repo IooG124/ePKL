@@ -14,7 +14,7 @@ class TeacherSeeder extends Seeder
         // Membuat data user guru dengan username
         $user = User::create([
             'username' => 'guru1',  // Tambahkan username
-            'password' => Hash::make('passwordguru1'),
+            'password' => Hash::make('guru1'),
             'role_id' => 2,  // ID untuk role teacher
         ]);
 
