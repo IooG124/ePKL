@@ -16,6 +16,7 @@ class Teacher extends Model
         'password',
         'alamat',
         'telepon',
+        'user_id',
     ];
 
     protected $hidden = [

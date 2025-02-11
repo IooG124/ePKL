@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
@@ -33,14 +35,21 @@ class TeacherController extends Controller
             'telepon' => 'required',
         ]);
 
+        $user = User::create([
+            'username' => $request->username,  // Tambahkan username
+            'password' => Hash::make($request->password),
+            'role_id' => 2,
+        ]);
+
         Teacher::create([
+            'user_id' => $user->id,
             'username' => $request->username,
             'name' => $request->name,
             'nip' => $request->nip,
-            'password' => bcrypt($request->password),
             'alamat' => $request->alamat,
             'telepon' => $request->telepon,
         ]);
+        
 
         return redirect()->route('teachers.index')->with('success', 'Guru berhasil ditambahkan');
     }
