@@ -5,8 +5,8 @@
         <form action="{{ route('teachers.store') }}" method="POST">
             @csrf
             <div class="mb-4">
-                <label for="nama" class="block text-gray-700 font-bold">Nama Guru</label>
-                <input type="text" name="nama" id="nama" class="w-full border border-gray-300 rounded-lg p-2" required>
+                <label for="name" class="block text-gray-700 font-bold">Nama Guru</label>
+                <input type="text" name="name" id="name" class="w-full border border-gray-300 rounded-lg p-2" required>
             </div>
 
             <div class="mb-4">
