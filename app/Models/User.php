@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'password',
+        'role_id',
     ];
 
     /**
@@ -56,10 +57,13 @@ class User extends Authenticatable
         return $this->morphTo();
     }
 
+    // app/Models/User.php
+
     public function student()
     {
-        return $this->hasOne(Student::class);
+        return $this->hasOne(Student::class, 'user_id');
     }
+
 
     public function teacher()
     {
