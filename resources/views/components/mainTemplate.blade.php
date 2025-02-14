@@ -72,10 +72,6 @@
                 @elseif(Auth::user()->role->role_name == 'teachers')
                     <div class="flex flex-col gap-2 pt-4">
                         <h1 class="text-xl md:text-2xl font-normal tracking-wider uppercase py-2">Guru</h1>
-                        <x-link-side href="/siswa">
-                            <i class="fi fi-ss-users-medical text-xl"></i>
-                            <h1 class="text-lg md:text-xl">Tambah Siswa</h1>
-                        </x-link-side>
                         <x-link-side href="{{ route('journals.verifyPage') }}">
                             <i class="fi fi-ss-memo-circle-check text-xl"></i>
                             <h1 class="text-lg md:text-xl">Verifikasi Jurnal</h1>
@@ -88,6 +84,10 @@
                 @elseif(Auth::user()->role->role_name == 'admin')
                     <div class="flex flex-col gap-2 pt-4">
                         <h1 class="text-xl md:text-2xl font-normal tracking-wider uppercase py-2">Admin</h1>
+                        <x-link-side href="/siswa">
+                            <i class="fi fi-ss-users-medical text-xl"></i>
+                            <h1 class="text-lg md:text-xl">Tambah Siswa</h1>
+                        </x-link-side>
                         <x-link-side href="{{ route('teachers.index') }}">
                             <i class="fi fi-ss-employees-woman-man text-xl"></i>
                             <h1 class="text-lg md:text-xl">Tambah Guru</h1>

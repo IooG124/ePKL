@@ -33,18 +33,25 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                @php $no = 1; @endphp
-                @foreach($attendances as $attendance)
+                @php
+                $userAttendances = $attendances->where('user_id', auth()->id());
+            @endphp
+
+            @if($userAttendances->isEmpty())
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-gray-500">Belum ada data absensi</td>
+                </tr>
+            @else
+                @foreach($userAttendances as $attendance)
                     <tr>
-                        <td class="px-6 py-4 border-b">{{ $no++ }}</td>
+                        <td class="px-6 py-4 border-b">{{ $loop->iteration }}</td>
                         <td class="px-6 py-4 border-b">{{ $attendance->condition }}</td>
                         <td class="px-6 py-4 border-b">{{ $attendance->login_date->format('d/m/Y') }}</td>
                         <td class="px-6 py-4 border-b">{{ $attendance->login_time->format('H:i') }}</td>
-                        <td class="px-6 py-4 border-b">{{ $attendance->total_login_hours ?? '-' }}</td>
+                        <td class="px-6 py-4 border-b">{{ $attendance->formatted_total_hours }}</td>
                     </tr>
                 @endforeach
-
-
+            @endif
             </tbody>
         </table>
     </div>

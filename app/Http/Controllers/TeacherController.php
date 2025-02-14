@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
-    // Menampilkan daftar guru
     public function index()
     {
         $teachers = Teacher::all();
@@ -15,13 +17,11 @@ class TeacherController extends Controller
         return view('teachers.index', compact('teachers'));
     }
 
-    // Menampilkan form untuk menambah guru
     public function create()
     {
         return view('teachers.create');
     }
 
-    // Menyimpan data guru baru
     public function store(Request $request)
     {
         $request->validate([
@@ -33,7 +33,7 @@ class TeacherController extends Controller
             'telepon' => 'required',
         ]);
 
-        Teacher::create([
+        $teacher = Teacher::create([
             'username' => $request->username,
             'name' => $request->name,
             'nip' => $request->nip,
@@ -42,17 +42,26 @@ class TeacherController extends Controller
             'telepon' => $request->telepon,
         ]);
 
+        $roleStudent = Role::where('role_name', 'teachers')->first();
+
+        $user = User::create([
+            'username' => $request->nip,
+            'password' => Hash::make($request->password),
+            'role_id' => $roleStudent->id,
+        ]);
+
+        $teacher->user_id = $user->id;
+        $teacher->save();
+
         return redirect()->route('teachers.index')->with('success', 'Guru berhasil ditambahkan');
     }
 
-    // Menampilkan form untuk mengedit guru
     public function edit($id)
     {
         $teacher = Teacher::findOrFail($id);
         return view('teachers.edit', compact('teacher'));
     }
 
-    // Mengupdate data guru
     public function update(Request $request, $id)
     {
         $teacher = Teacher::findOrFail($id);
@@ -78,7 +87,6 @@ class TeacherController extends Controller
         return redirect()->route('teachers.index')->with('success', 'Guru berhasil diperbarui');
     }
 
-    // Menghapus data guru
     public function destroy($id)
     {
         $teacher = Teacher::findOrFail($id);
