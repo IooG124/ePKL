@@ -34,7 +34,7 @@
                             <tr class="{{ $index % 2 == 0 ? 'bg-white' : 'bg-gray-50' }} hover:bg-gray-100 transition-all duration-200">
                                 <td class="px-6 py-4 text-center">{{ $index + 1 }}</td>
                                 <td class="px-6 py-4">{{ $teacher->username }}</td>
-                                <td class="px-6 py-4">{{ $teacher->nama }}</td>
+                                <td class="px-6 py-4">{{ $teacher->name }}</td>
                                 <td class="px-6 py-4">{{ $teacher->nip }}</td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex justify-center">

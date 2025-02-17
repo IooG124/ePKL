@@ -30,27 +30,6 @@ class DatabaseSeeder extends Seeder
             'role_id' => $roleAdmin->id,
         ]
     );
-    User::firstOrCreate(
-        ['username' => 'admin2'],
-        [
-            'password' => Hash::make('1234'),
-            'role_id' => $roleAdmin->id,
-        ]
-    );
-    User::firstOrCreate(
-        ['username' => 'siswa'],
-        [
-            'password' => Hash::make('1234'),
-            'role_id' => $roleStudent->id,
-        ]
-    );
-    User::firstOrCreate(
-        ['username' => 'siswa2'],
-        [
-            'password' => Hash::make('1234'),
-            'role_id' => $roleStudent->id,
-        ]
-    );
     $this->call([
         TeacherSeeder::class,
         StudentSeeder::class,

@@ -22,9 +22,9 @@ class TeacherSeeder extends Seeder
         Teacher::create([
             'user_id' => $user->id,
             'username' => 'guru1',
-            'name' => 'Guru Satu',
-            'nip' => '987654321',
-            'alamat' => 'Jl. Pendidikan No. 1',
+            'name' => 'Ni Erawitiwi, S.Pd.',
+            'nip' => '0987654321',
+            'alamat' => 'Jl. HOS Cokroaminoto No 141',
             'telepon' => '081234567890',
         ]);
     }

@@ -22,11 +22,11 @@ class StudentSeeder extends Seeder
         // Membuat data siswa yang terhubung dengan user
         Student::create([
             'user_id' => $user->id,
-            'nis' => '12345',
-            'name' => 'Siswa Satu',
-            'kelas' => '12A',
-            'jurusan' => 'IPA',
-            'email' => 'siswa1@email.com',
+            'nis' => '30686',
+            'name' => 'I Made Dio Kartiana Putra',
+            'kelas' => 'XII RPL 3',
+            'jurusan' => 'Rekayasa Perangkat Lunak',
+            'email' => 'dioputra1423@gmail.com',
         ]);
     }
 }
